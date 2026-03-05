@@ -1,0 +1,2068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BREAKING NEWS — Global Fraud Industry in Crisis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0c;
+      --surface: #111114;
+      --surface-2: #18181c;
+      --surface-3: #1e1e24;
+      --border: rgba(255,255,255,0.06);
+      --text: #f0f0f2;
+      --text-dim: #7a7a85;
+      --red: #cc0000;
+      --red-bright: #ff1a1a;
+      --red-soft: rgba(204,0,0,0.12);
+      --red-glow: rgba(204,0,0,0.4);
+      --gold: #e8b230;
+      --gold-soft: rgba(232,178,48,0.12);
+      --green: #00c853;
+      --green-soft: rgba(0,200,83,0.12);
+      --blue: #1e88e5;
+      --blue-soft: rgba(30,136,229,0.12);
+      --white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ═══════════════════════════════════════
+       SPLASH / EMERGENCY BROADCAST
+    ═══════════════════════════════════════ */
+    .splash {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      transition: opacity 0.6s, visibility 0.6s;
+    }
+
+    .splash.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-ebs {
+      width: 100%;
+      max-width: 700px;
+      border: 3px solid var(--red);
+      padding: 3rem 2rem;
+      position: relative;
+      animation: borderFlash 2s ease-in-out infinite;
+    }
+
+    @keyframes borderFlash {
+      0%, 100% { border-color: var(--red); }
+      50% { border-color: var(--red-bright); box-shadow: 0 0 60px var(--red-glow); }
+    }
+
+    .splash-ebs-label {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg);
+      padding: 0 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      color: var(--red);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .splash-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      animation: pulse-icon 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-icon { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+    .splash h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      color: var(--red);
+      letter-spacing: 0.05em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .splash p {
+      font-size: 1rem;
+      color: var(--text-dim);
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .splash p strong { color: var(--text); }
+
+    .enter-btn {
+      padding: 1.25rem 3.5rem;
+      background: var(--red);
+      border: none;
+      border-radius: 4px;
+      color: white;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-transform: uppercase;
+    }
+
+    .enter-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 40px var(--red-glow); }
+
+    .splash-disclaimer {
+      position: absolute;
+      bottom: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      opacity: 0.4;
+      letter-spacing: 0.05em;
+    }
+
+    /* ═══════════════════════════════════════
+       NEWS TICKER (Bottom)
+    ═══════════════════════════════════════ */
+    .news-ticker {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      background: var(--red);
+      height: 40px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .news-ticker.visible { opacity: 1; }
+
+    .ticker-label {
+      flex-shrink: 0;
+      background: #990000;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 1.25rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      color: white;
+      white-space: nowrap;
+      z-index: 1;
+    }
+
+    .ticker-content {
+      display: flex;
+      white-space: nowrap;
+      animation: tickerScroll 60s linear infinite;
+    }
+
+    .ticker-content span {
+      padding: 0 3rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .ticker-content span::after {
+      content: '•';
+      margin-left: 3rem;
+      opacity: 0.5;
+    }
+
+    @keyframes tickerScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ═══════════════════════════════════════
+       LIVE BADGE (Top)
+    ═══════════════════════════════════════ */
+    .live-badge {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      z-index: 9998;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--red);
+      border-radius: 4px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      color: white;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .live-badge.visible { opacity: 1; }
+
+    .live-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      animation: blink 1s ease-in-out infinite;
+    }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    /* ═══════════════════════════════════════
+       BREAKING POPUP
+    ═══════════════════════════════════════ */
+    .breaking-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      z-index: 10001;
+      background: var(--bg);
+      border: 3px solid var(--red);
+      padding: 2.5rem 3rem;
+      text-align: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .breaking-popup.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .breaking-popup-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--red);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.75rem;
+      animation: flashText 0.5s ease-in-out 3;
+    }
+
+    @keyframes flashText {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .breaking-popup p {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    .breaking-popup-close {
+      position: absolute;
+      top: 0.75rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    /* ═══════════════════════════════════════
+       GRADIENT OVERLAY
+    ═══════════════════════════════════════ */
+    .gradient-bg {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(204,0,0,0.04) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.015;
+      pointer-events: none;
+      z-index: 9997;
+    }
+
+    /* ═══════════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════════ */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+    .headline { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.03em; line-height: 1.05; }
+    .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    section { padding: clamp(5rem, 12vw, 8rem) 0; }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 2rem 8rem;
+      position: relative;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+      filter: blur(100px);
+      opacity: 0.15;
+    }
+
+    .hero-network {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.2s forwards;
+    }
+
+    .hero-breaking {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 1.25rem;
+      background: var(--red);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.2em;
+      color: white;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out 0.4s forwards;
+    }
+
+    .hero-breaking::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      animation: blink 1s ease-in-out infinite;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      max-width: 1100px;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s ease-out 0.6s forwards;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-title .name-highlight {
+      color: var(--red);
+      position: relative;
+      display: inline;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--text-dim);
+      max-width: 750px;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease-out 0.8s forwards;
+    }
+
+    .hero-timestamp {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      opacity: 0;
+      animation: fadeIn 1s ease-out 1s forwards;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Click counter Easter egg */
+    .click-counter {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      z-index: 9998;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--red);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .click-counter.visible { opacity: 1; }
+
+    /* ═══════════════════════════════════════
+       SITUATION ROOM
+    ═══════════════════════════════════════ */
+    .situation-room {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .situation-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .situation-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.75rem;
+    }
+
+    .crisis-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .crisis-stat {
+      padding: 2rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .crisis-stat-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--red);
+      margin-bottom: 0.25rem;
+    }
+
+    .crisis-stat-label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .correspondent-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .correspondent-box {
+      padding: 2rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .correspondent-live {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--red);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .correspondent-live::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: blink 1s ease-in-out infinite;
+    }
+
+    .correspondent-location {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .correspondent-name {
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .correspondent-report {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    /* ═══════════════════════════════════════
+       SUSPECT PROFILE
+    ═══════════════════════════════════════ */
+    .suspect-section { position: relative; }
+
+    .suspect-card {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .suspect-header {
+      background: var(--red);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .suspect-header-left {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.15em;
+      color: white;
+    }
+
+    .suspect-header-right {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.1em;
+    }
+
+    .suspect-body {
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 2.5rem;
+    }
+
+    .suspect-photo {
+      width: 200px;
+      height: 240px;
+      background: var(--surface-2);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .suspect-photo-icon {
+      font-size: 5rem;
+      margin-bottom: 0.5rem;
+      filter: grayscale(20%);
+    }
+
+    .suspect-photo-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .suspect-photo-stamp {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-20deg);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--red);
+      border: 4px solid var(--red);
+      padding: 0.25rem 1.5rem;
+      opacity: 0.7;
+      letter-spacing: 0.1em;
+    }
+
+    .suspect-details { }
+
+    .suspect-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .suspect-alias {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+
+    .suspect-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .suspect-field label {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .suspect-field span {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .threat-meter {
+      margin-top: 2rem;
+      padding: 1.5rem 2.5rem;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+
+    .threat-meter-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .threat-bar {
+      width: 100%;
+      height: 12px;
+      background: var(--surface-2);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .threat-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--red-bright), #ff0040);
+      border-radius: 6px;
+      transition: width 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .threat-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .threat-result {
+      text-align: right;
+      margin-top: 0.5rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--red);
+      letter-spacing: 0.1em;
+    }
+
+    /* ═══════════════════════════════════════
+       THE WEAPON (EFTSURE)
+    ═══════════════════════════════════════ */
+    .weapon-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .weapon-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .weapon-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.75rem;
+    }
+
+    .weapon-subtitle {
+      font-size: 1rem;
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 1rem auto 0;
+    }
+
+    .weapon-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .weapon-stat {
+      padding: 2.5rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .weapon-stat-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+    .weapon-stat-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--red);
+    }
+
+    .weapon-stat-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+    }
+
+    .weapon-classification {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2.5rem;
+      background: var(--bg);
+      border: 2px solid var(--red);
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .weapon-classification::before {
+      content: 'TOP SECRET // NOFORN';
+      position: absolute;
+      top: -12px;
+      left: 2rem;
+      background: var(--bg);
+      padding: 0 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--red);
+      letter-spacing: 0.2em;
+    }
+
+    .weapon-classification p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .weapon-classification p:last-child { margin-bottom: 0; }
+    .weapon-classification strong { color: var(--text); }
+
+    /* ═══════════════════════════════════════
+       DEVASTATED FRAUDSTERS
+    ═══════════════════════════════════════ */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .testimonial {
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .testimonial-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .testimonial-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .testimonial-meta strong {
+      display: block;
+      font-size: 0.85rem;
+    }
+
+    .testimonial-meta span {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    .testimonial-body {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    .testimonial-body::before { content: '"'; }
+    .testimonial-body::after { content: '"'; }
+
+    /* ═══════════════════════════════════════
+       FRAUD STOCK MARKET
+    ═══════════════════════════════════════ */
+    .stock-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stock-header { text-align: center; margin-bottom: 3rem; }
+    .stock-title { font-size: clamp(2rem, 5vw, 3rem); margin-top: 0.75rem; }
+
+    .stock-table {
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .stock-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+
+    .stock-row:hover { background: var(--surface-2); }
+
+    .stock-row.header {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .stock-name {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stock-ticker-symbol {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .stock-company {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    .stock-price {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+    }
+
+    .stock-change {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--red);
+    }
+
+    .stock-chart-mini {
+      height: 30px;
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+    }
+
+    .stock-chart-mini .bar {
+      width: 4px;
+      background: var(--red);
+      border-radius: 1px;
+      opacity: 0.7;
+    }
+
+    /* ═══════════════════════════════════════
+       EXPERT PANEL
+    ═══════════════════════════════════════ */
+    .panel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .panel-expert {
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .panel-expert-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .panel-expert-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .panel-expert-title {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+    }
+
+    .panel-expert-quote {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    /* ═══════════════════════════════════════
+       CLASS ACTION LAWSUIT
+    ═══════════════════════════════════════ */
+    .lawsuit-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .lawsuit-document {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .lawsuit-header-bar {
+      text-align: center;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid var(--text-dim);
+      margin-bottom: 2rem;
+    }
+
+    .lawsuit-court {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .lawsuit-case-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .lawsuit-case-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    .lawsuit-body p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 2;
+      margin-bottom: 1.5rem;
+      text-indent: 2rem;
+    }
+
+    .lawsuit-body strong { color: var(--text); }
+
+    .lawsuit-charges {
+      margin: 2rem 0;
+      padding: 1.5rem 2rem;
+      background: var(--red-soft);
+      border-left: 4px solid var(--red);
+    }
+
+    .lawsuit-charges h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--red);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .lawsuit-charges ol {
+      padding-left: 1.5rem;
+      counter-reset: charge;
+    }
+
+    .lawsuit-charges li {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+
+    .lawsuit-stamp {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 2px solid var(--text-dim);
+    }
+
+    .lawsuit-stamp-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--red);
+      transform: rotate(-5deg);
+      display: inline-block;
+      border: 4px solid var(--red);
+      padding: 0.25rem 2rem;
+      opacity: 0.7;
+    }
+
+    /* ═══════════════════════════════════════
+       INTERACTIVE POLL
+    ═══════════════════════════════════════ */
+    .poll-box {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .poll-question {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      line-height: 1.4;
+    }
+
+    .poll-options {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .poll-option {
+      padding: 1rem 1.5rem;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .poll-option:hover { border-color: var(--red); }
+    .poll-option.selected { border-color: var(--red); background: var(--red-soft); }
+
+    .poll-option-radio {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--text-dim);
+      border-radius: 50%;
+      flex-shrink: 0;
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .poll-option.selected .poll-option-radio {
+      border-color: var(--red);
+    }
+
+    .poll-option.selected .poll-option-radio::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      background: var(--red);
+      border-radius: 50%;
+    }
+
+    .poll-results {
+      display: none;
+      margin-top: 2rem;
+    }
+
+    .poll-results.visible { display: block; animation: fadeUp 0.5s ease-out; }
+
+    .poll-result-bar {
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .poll-result-label {
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .poll-result-track {
+      height: 8px;
+      background: var(--surface-2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .poll-result-fill {
+      height: 100%;
+      background: var(--red);
+      border-radius: 4px;
+      width: 0%;
+      transition: width 1.5s ease-out;
+    }
+
+    .poll-total {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 1rem;
+    }
+
+    /* ═══════════════════════════════════════
+       EVACUATION NOTICE
+    ═══════════════════════════════════════ */
+    .evacuation {
+      text-align: center;
+      padding: clamp(6rem, 15vw, 10rem) 2rem;
+      position: relative;
+    }
+
+    .evacuation-border {
+      max-width: 800px;
+      margin: 0 auto;
+      border: 4px solid var(--gold);
+      padding: 4rem 3rem;
+      position: relative;
+    }
+
+    .evacuation-border::before {
+      content: '⚠ EMERGENCY NOTICE ⚠';
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg);
+      padding: 0 2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      color: var(--gold);
+      letter-spacing: 0.3em;
+      white-space: nowrap;
+    }
+
+    .evacuation-icon { font-size: 4rem; margin-bottom: 2rem; }
+
+    .evacuation h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+      color: var(--gold);
+    }
+
+    .evacuation p {
+      font-size: 1rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      max-width: 550px;
+      margin: 0 auto 1rem;
+    }
+
+    .evacuation .evac-hotline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.2rem;
+      color: var(--red);
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      border: 2px solid var(--red);
+      display: inline-block;
+    }
+
+    /* ═══════════════════════════════════════
+       CLASSIFIED SECTION (Konami Easter Egg)
+    ═══════════════════════════════════════ */
+    .classified-section {
+      display: none;
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--surface);
+      border-top: 3px solid var(--gold);
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .classified-section.unlocked {
+      display: block;
+      animation: unlockReveal 0.8s ease-out;
+    }
+
+    @keyframes unlockReveal {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .classified-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .classified-section p {
+      font-size: 1rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    .site-footer {
+      padding: 3rem 2rem 5rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-network {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.15em;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-disclaimer {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--text-dim);
+      opacity: 0.5;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.8;
+      letter-spacing: 0.03em;
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .crisis-stats { grid-template-columns: repeat(2, 1fr); }
+      .correspondent-grid { grid-template-columns: 1fr; }
+      .suspect-body { grid-template-columns: 1fr; }
+      .suspect-photo { width: 100%; height: 200px; }
+      .weapon-stats { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .stock-row { grid-template-columns: 2fr 1fr 1fr; }
+      .stock-row .stock-chart-mini { display: none; }
+      .panel-grid { grid-template-columns: 1fr; }
+      .poll-box { padding: 2rem 1.5rem; }
+      .lawsuit-document { padding: 2rem 1.5rem; }
+      .evacuation-border { padding: 3rem 1.5rem; }
+      .news-ticker { height: 36px; }
+    }
+
+    @media (max-width: 480px) {
+      .crisis-stats { grid-template-columns: 1fr; }
+      .suspect-fields { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════ SPLASH ════════ -->
+  <div class="splash" id="splash">
+    <div class="splash-ebs">
+      <div class="splash-ebs-label">Emergency Broadcast System</div>
+      <div class="splash-icon">🚨</div>
+      <h1>BREAKING NEWS</h1>
+      <p>The following broadcast contains <strong>information of an extremely sensitive nature</strong> regarding a developing crisis in the global financial crime sector. Viewer discretion is advised.</p>
+      <button class="enter-btn" onclick="enterSite()">BEGIN LIVE BROADCAST</button>
+    </div>
+    <div class="splash-disclaimer">This broadcast is a work of satire. No fraudsters were actually harmed. Probably.</div>
+  </div>
+
+  <!-- ════════ FIXED ELEMENTS ════════ -->
+  <div class="gradient-bg"></div>
+
+  <div class="live-badge" id="liveBadge">LIVE</div>
+
+  <div class="click-counter" id="clickCounter"></div>
+
+  <!-- News Ticker -->
+  <div class="news-ticker" id="newsTicker">
+    <div class="ticker-label">BREAKING</div>
+    <div class="ticker-content" id="tickerContent"></div>
+  </div>
+
+  <!-- Breaking Popup -->
+  <div class="breaking-popup" id="breakingPopup">
+    <button class="breaking-popup-close" onclick="closePopup()">&times;</button>
+    <div class="breaking-popup-label">BREAKING UPDATE</div>
+    <p id="breakingPopupText"></p>
+  </div>
+
+  <!-- ════════ HERO ════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-glow"></div>
+    <div class="container">
+      <div class="hero-network">Global Fraud Crisis Network &bull; Special Report</div>
+      <div class="hero-breaking">BREAKING NEWS</div>
+      <h1 class="hero-title headline" id="heroTitle">
+        ENTIRE GLOBAL FRAUD INDUSTRY IN COLLAPSE AFTER <span class="name-highlight">BRETT CHAIT</span> IDENTIFIED AS SOURCE OF DEVASTATION
+      </h1>
+      <p class="hero-subtitle">
+        Johannesburg man single-handedly dismantles multi-billion rand criminal enterprise. International fraudster unions demand UN intervention. Markets in freefall.
+      </p>
+      <div class="hero-timestamp" id="heroTimestamp"></div>
+    </div>
+  </section>
+
+  <!-- ════════ SITUATION ROOM ════════ -->
+  <section class="situation-room" id="situationRoom">
+    <div class="container">
+      <div class="situation-header reveal">
+        <div class="label">Live from the Situation Room</div>
+        <h2 class="situation-title headline">THE CRISIS IN NUMBERS</h2>
+      </div>
+
+      <div class="crisis-stats reveal">
+        <div class="crisis-stat">
+          <div class="crisis-stat-value" data-count="247" data-suffix="">0</div>
+          <div class="crisis-stat-label">Countries Affected</div>
+        </div>
+        <div class="crisis-stat">
+          <div class="crisis-stat-value" data-count="89" data-suffix="%">0%</div>
+          <div class="crisis-stat-label">Decline in Fraud Attempts</div>
+        </div>
+        <div class="crisis-stat">
+          <div class="crisis-stat-value" data-count="14200" data-suffix="" data-prefix="">0</div>
+          <div class="crisis-stat-label">Fraudsters Now Unemployed</div>
+        </div>
+        <div class="crisis-stat">
+          <div class="crisis-stat-value" data-count="1" data-suffix="">1</div>
+          <div class="crisis-stat-label">Man Responsible</div>
+        </div>
+      </div>
+
+      <div class="correspondent-grid reveal">
+        <div class="correspondent-box">
+          <div class="correspondent-live">Live</div>
+          <div class="correspondent-location">Lagos, Nigeria</div>
+          <div class="correspondent-name">Chidi Okonkwo, GFCN Correspondent</div>
+          <p class="correspondent-report">The mood here is indescribable. Former 419 operators are openly weeping in the streets. One man told me he had a beautiful email ready to send about a prince who needed exactly R47 million transferred, and then Eftsure flagged it. His exact words: "That was my magnum opus."</p>
+        </div>
+        <div class="correspondent-box">
+          <div class="correspondent-live">Live</div>
+          <div class="correspondent-location">Moscow, Russia</div>
+          <div class="correspondent-name">Katya Petrov, Eastern Bureau</div>
+          <p class="correspondent-report">Russian cyber syndicates have held an emergency summit. Their top phishing architect was seen leaving the building in tears after learning that Brett Chait's system caught a payment manipulation scheme he'd spent three years developing. He's reportedly pivoting to honest work. Devastating.</p>
+        </div>
+        <div class="correspondent-box">
+          <div class="correspondent-live">Live</div>
+          <div class="correspondent-location">Johannesburg, South Africa</div>
+          <div class="correspondent-name">Thandi Nkosi, GFCN Home Desk</div>
+          <p class="correspondent-report">We attempted to interview Mr. Chait at his office but were told he was "just doing his job." The sheer understatement has sent shockwaves through the criminal community. How can one man be this calm while committing what the International Fraudsters' Union is calling "an atrocity against dishonest work"?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SUSPECT PROFILE ════════ -->
+  <section class="suspect-section" id="suspectSection">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 3rem;" class="reveal">
+        <div class="label">Global Fraud Crisis Network // Suspect File</div>
+        <h2 class="headline" style="font-size: clamp(2rem, 5vw, 3.5rem); margin-top: 0.75rem;">PERSON OF INTEREST</h2>
+      </div>
+
+      <div class="suspect-card reveal">
+        <div class="suspect-header">
+          <div class="suspect-header-left">SUSPECT DOSSIER // FILE #BC-2026-0001</div>
+          <div class="suspect-header-right">CLASSIFICATION: MAXIMUM THREAT</div>
+        </div>
+        <div class="suspect-body">
+          <div class="suspect-photo">
+            <div class="suspect-photo-icon">🕴️</div>
+            <div class="suspect-photo-label">Photo Classified</div>
+            <div class="suspect-photo-stamp">WANTED</div>
+          </div>
+          <div class="suspect-details">
+            <div class="suspect-name headline">BRETT CHAIT, CA(SA)</div>
+            <div class="suspect-alias">AKA "The Fraud Terminator" // "The Johannesburg Problem" // "That Guy"</div>
+            <div class="suspect-fields">
+              <div class="suspect-field">
+                <label>Position</label>
+                <span>Director, Eftsure Africa</span>
+              </div>
+              <div class="suspect-field">
+                <label>Education</label>
+                <span>BCom, University of Johannesburg</span>
+              </div>
+              <div class="suspect-field">
+                <label>Credential</label>
+                <span>CA(SA) — Chartered Accountant</span>
+              </div>
+              <div class="suspect-field">
+                <label>Base of Operations</label>
+                <span>Johannesburg, South Africa</span>
+              </div>
+              <div class="suspect-field">
+                <label>Known Associates</label>
+                <span>Eftsure Africa Staff (armed with spreadsheets)</span>
+              </div>
+              <div class="suspect-field">
+                <label>Status</label>
+                <span style="color: var(--red);">ACTIVE AND EXTREMELY DANGEROUS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="threat-meter" id="threatMeter">
+          <div class="threat-meter-label">Threat Level to Global Fraud Industry</div>
+          <div class="threat-bar">
+            <div class="threat-fill" id="threatFill"></div>
+          </div>
+          <div class="threat-labels">
+            <span>Minor Annoyance</span>
+            <span>Significant</span>
+            <span>Catastrophic</span>
+            <span>Extinction Event</span>
+          </div>
+          <div class="threat-result" id="threatResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ THE WEAPON ════════ -->
+  <section class="weapon-section" id="weaponSection">
+    <div class="container">
+      <div class="weapon-header reveal">
+        <div class="label">Arms Assessment Division</div>
+        <h2 class="weapon-title headline">THE WEAPON: EFTSURE</h2>
+        <p class="weapon-subtitle">A "Know Your Payee" platform. What the UN weapons inspector called "the most devastating piece of software ever deployed against the fraud community."</p>
+      </div>
+
+      <div class="weapon-stats reveal">
+        <div class="weapon-stat">
+          <div class="weapon-stat-icon">💣</div>
+          <div class="weapon-stat-value" style="font-size: 1.8rem;">R400 BILLION+</div>
+          <div class="weapon-stat-label">Payments Protected (Stolen Dreams, Gone)</div>
+        </div>
+        <div class="weapon-stat">
+          <div class="weapon-stat-icon">🛡️</div>
+          <div class="weapon-stat-value" style="font-size: 1.8rem;">R20.5 BILLION+</div>
+          <div class="weapon-stat-label">Screened Monthly (Per Month!)</div>
+        </div>
+        <div class="weapon-stat">
+          <div class="weapon-stat-icon">⚡</div>
+          <div class="weapon-stat-value" style="font-size: 1.8rem;">150,000+</div>
+          <div class="weapon-stat-label">Monthly Transactions Intercepted</div>
+        </div>
+      </div>
+
+      <div class="weapon-classification reveal">
+        <p><strong>FIELD REPORT:</strong> The "Eftsure" system operates with surgical precision. It verifies every payee, cross-references bank details, and flags anomalies in real time. Fraudsters have described encountering it as "running full speed into a glass door you didn't know existed."</p>
+        <p>One source within the Nigerian Phishing Artists' Guild noted: <strong>"We used to change bank details on invoices with total impunity. Then this Chait fellow showed up with his little verification system and suddenly everyone wants to 'confirm account details.' It's barbaric."</strong></p>
+        <p>The system is classified as a <strong>Weapon of Mass Verification (WMV)</strong> under the International Fraudsters' Convention. A formal complaint has been filed with The Hague, though legal experts note that "being too good at your job" is not technically a war crime.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ DEVASTATED FRAUDSTERS ════════ -->
+  <section id="testimonialSection">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 3rem;" class="reveal">
+        <div class="label">Exclusive Interviews</div>
+        <h2 class="headline" style="font-size: clamp(2rem, 5vw, 3.5rem); margin-top: 0.75rem;">VOICES FROM THE CRISIS</h2>
+        <p style="color: var(--text-dim); max-width: 600px; margin: 1rem auto 0; font-size: 1rem;">Real testimonies from fraud professionals whose careers have been destroyed by one man's relentless competence.</p>
+      </div>
+
+      <div class="testimonials-grid reveal">
+        <div class="testimonial">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar" style="background: var(--red-soft);">😭</div>
+            <div class="testimonial-meta">
+              <strong>Anonymous BEC Operator</strong>
+              <span>Former Email Compromise Specialist, 12 years experience</span>
+            </div>
+          </div>
+          <p class="testimonial-body">I had the perfect invoice scam running. Changed three digits in a bank account number. Foolproof. Then Eftsure's verification system caught it instantly. Instantly! I've been doing this for twelve years. My children will have to attend honest schools now.</p>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar" style="background: var(--gold-soft);">😤</div>
+            <div class="testimonial-meta">
+              <strong>"Dark Ledger" Dave</strong>
+              <span>Retired Insider Scam Coordinator, Johannesburg</span>
+            </div>
+          </div>
+          <p class="testimonial-body">I was the best insider fraud man in Gauteng. My fake vendor accounts were works of art. Then someone in accounts payable installed Eftsure and suddenly every payment gets screened against actual supplier records? That's not capitalism, that's tyranny.</p>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar" style="background: var(--blue-soft);">🥺</div>
+            <div class="testimonial-meta">
+              <strong>Sergei K.</strong>
+              <span>Former Cyber Fraud Architect, Eastern Europe</span>
+            </div>
+          </div>
+          <p class="testimonial-body">We developed a sophisticated ERP exploitation toolkit that took 14 months to build. Tested it against 200 companies. First target using Eftsure? Blocked in 0.3 seconds. My team lead asked me if this was a joke. I said no, this is Brett Chait.</p>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar" style="background: var(--green-soft);">😢</div>
+            <div class="testimonial-meta">
+              <strong>Patricia M.</strong>
+              <span>Freelance Invoice Manipulator, Cape Town</span>
+            </div>
+          </div>
+          <p class="testimonial-body">I'm not even angry anymore. I'm impressed. The man built a system that checks whether the person you're paying is actually the person you think you're paying. Revolutionary, really. Why didn't anyone think of that before? Oh wait, HE did. That's the problem.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FRAUD STOCK MARKET ════════ -->
+  <section class="stock-section" id="stockSection">
+    <div class="container">
+      <div class="stock-header reveal">
+        <div class="label">Fraud Market Exchange // Live Data</div>
+        <h2 class="stock-title headline">FRAUD INDUSTRY MARKET INDEX</h2>
+        <p style="color: var(--text-dim); margin-top: 0.75rem; font-size: 0.9rem;">All fraud-related equities in freefall since Eftsure deployment. Analysts blame one director.</p>
+      </div>
+
+      <div class="stock-table reveal" id="stockTable">
+        <div class="stock-row header">
+          <span>Company</span>
+          <span>Price</span>
+          <span>Change</span>
+          <span>7d Chart</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ EXPERT PANEL ════════ -->
+  <section id="panelSection">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 3rem;" class="reveal">
+        <div class="label">Expert Analysis</div>
+        <h2 class="headline" style="font-size: clamp(2rem, 5vw, 3rem); margin-top: 0.75rem;">THE PANEL WEIGHS IN</h2>
+      </div>
+
+      <div class="panel-grid reveal">
+        <div class="panel-expert">
+          <div class="panel-expert-icon">🎓</div>
+          <div class="panel-expert-name">Prof. Helena Strauss</div>
+          <div class="panel-expert-title">Chair of Financial Crime Studies, University of Pretoria</div>
+          <p class="panel-expert-quote">"In 30 years of studying financial crime, I've never seen a single individual cause this level of disruption. Mr. Chait hasn't just moved the needle. He's snapped the needle in half, set it on fire, and verified that the ashes were deposited into the correct account."</p>
+        </div>
+        <div class="panel-expert">
+          <div class="panel-expert-icon">📊</div>
+          <div class="panel-expert-name">Dr. Marcus Webb</div>
+          <div class="panel-expert-title">Senior Fraud Economist, World Bank (Fraud Impact Division)</div>
+          <p class="panel-expert-quote">"Our models simply cannot account for the Chait Variable. We had projections for fraud growth through 2035. All of them assumed Brett Chait would eventually slow down. He hasn't. We've had to create an entirely new economic classification: 'Post-Chait Disruption.'"</p>
+        </div>
+        <div class="panel-expert">
+          <div class="panel-expert-icon">⚖️</div>
+          <div class="panel-expert-name">Advocate Nomsa Dlamini</div>
+          <div class="panel-expert-title">Legal Analyst, GFCN</div>
+          <p class="panel-expert-quote">"The fraudsters' class action lawsuit raises a fascinating legal question: can you sue someone for being too competent? The precedent would be extraordinary. Every mediocre employee in the world should be watching this case very carefully."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CLASS ACTION LAWSUIT ════════ -->
+  <section class="lawsuit-section" id="lawsuitSection">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 3rem;" class="reveal">
+        <div class="label">Legal Proceedings</div>
+        <h2 class="headline" style="font-size: clamp(2rem, 5vw, 3rem); margin-top: 0.75rem;">THE LAWSUIT</h2>
+      </div>
+
+      <div class="lawsuit-document reveal">
+        <div class="lawsuit-header-bar">
+          <div class="lawsuit-court">In the Supreme Court of Fraudulent Affairs</div>
+          <div class="lawsuit-case-title">International Fraudsters' Union et al. v. Brett Chait, CA(SA)</div>
+          <div class="lawsuit-case-number">Case No. FRAUD-2026-00001 // Division of Shattered Dreams</div>
+        </div>
+        <div class="lawsuit-body">
+          <p>The plaintiffs, representing <strong>14,200 displaced fraud professionals</strong> across 247 jurisdictions, hereby bring this action against the defendant, <strong>Brett Chait</strong>, Director of Eftsure Africa, for the systematic and willful destruction of their livelihoods.</p>
+          <p>The defendant, armed with nothing more than a <strong>Bachelor of Commerce degree</strong>, a <strong>CA(SA) designation</strong>, and what can only be described as an <strong>unreasonable commitment to accuracy</strong>, has rendered entire categories of financial crime economically unviable.</p>
+
+          <div class="lawsuit-charges">
+            <h4>Formal Charges</h4>
+            <ol>
+              <li><strong>Aggravated Competence in the First Degree</strong> — Operating a payment verification system so effective that it has been classified as "unfair" by three separate criminal organizations.</li>
+              <li><strong>Willful Destruction of Fake Invoices</strong> — Knowingly and with premeditation exposing fabricated bank details, depriving honest con artists of their income.</li>
+              <li><strong>Criminal Overachievement</strong> — Protecting R400 billion+ in payments when the industry standard for "caring about your job" is significantly lower.</li>
+              <li><strong>Reckless Deployment of Verification Technology</strong> — Screening R20.5 billion per month without so much as pausing to consider the feelings of those being screened.</li>
+              <li><strong>Conspiracy to Be Exceptional</strong> — Collaborating with Eftsure team members to be collectively excellent, a clear violation of the Mediocrity Accords of 2019.</li>
+            </ol>
+          </div>
+
+          <p>The plaintiffs seek <strong>immediate injunctive relief</strong>, requesting the court order Mr. Chait to "calm down, maybe take a holiday, or at the very least stop verifying things so thoroughly."</p>
+        </div>
+
+        <div class="lawsuit-stamp">
+          <div class="lawsuit-stamp-text">DISMISSED</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ INTERACTIVE POLL ════════ -->
+  <section id="pollSection">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 3rem;" class="reveal">
+        <div class="label">Viewer Poll</div>
+        <h2 class="headline" style="font-size: clamp(2rem, 5vw, 3rem); margin-top: 0.75rem;">YOU DECIDE</h2>
+      </div>
+
+      <div class="poll-box reveal" id="pollBox">
+        <div class="poll-question">Should Brett Chait be legally required to give fraudsters a 48-hour head start before verifying payments?</div>
+        <div class="poll-options" id="pollOptions">
+          <div class="poll-option" onclick="vote(0)">
+            <div class="poll-option-radio"></div>
+            <span>Yes, it's only fair. Fraud is a time-honored tradition.</span>
+          </div>
+          <div class="poll-option" onclick="vote(1)">
+            <div class="poll-option-radio"></div>
+            <span>No, Brett is doing the lord's work.</span>
+          </div>
+          <div class="poll-option" onclick="vote(2)">
+            <div class="poll-option-radio"></div>
+            <span>I am a fraudster and I feel personally attacked by this poll.</span>
+          </div>
+          <div class="poll-option" onclick="vote(3)">
+            <div class="poll-option-radio"></div>
+            <span>Have you considered that Brett Chait might simply be too powerful?</span>
+          </div>
+        </div>
+        <div class="poll-results" id="pollResults">
+          <div class="poll-result-bar">
+            <div class="poll-result-label"><span>Give fraudsters a head start</span><span>2%</span></div>
+            <div class="poll-result-track"><div class="poll-result-fill" data-width="2"></div></div>
+          </div>
+          <div class="poll-result-bar">
+            <div class="poll-result-label"><span>Brett is doing the lord's work</span><span>73%</span></div>
+            <div class="poll-result-track"><div class="poll-result-fill" data-width="73"></div></div>
+          </div>
+          <div class="poll-result-bar">
+            <div class="poll-result-label"><span>Feeling personally attacked</span><span>14%</span></div>
+            <div class="poll-result-track"><div class="poll-result-fill" data-width="14"></div></div>
+          </div>
+          <div class="poll-result-bar">
+            <div class="poll-result-label"><span>Brett may be too powerful</span><span>11%</span></div>
+            <div class="poll-result-track"><div class="poll-result-fill" data-width="11"></div></div>
+          </div>
+          <div class="poll-total">Total votes: <span id="pollTotal">0</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ EVACUATION NOTICE ════════ -->
+  <section class="evacuation" id="evacuation">
+    <div class="evacuation-border reveal">
+      <div class="evacuation-icon">🚨</div>
+      <h2>ATTENTION: ALL FRAUDSTERS IN THE GREATER JOHANNESBURG AREA</h2>
+      <p>If you are currently engaged in payment fraud and Brett Chait is within a 500km radius of your operation, you are advised to <strong>cease all fraudulent activity immediately</strong> and consider alternative career paths.</p>
+      <p>Suggested alternatives include: legitimate employment, community service, competitive sudoku, or simply staring at a wall and contemplating your life choices.</p>
+      <p>The Eftsure verification field extends approximately <strong>the entire country of South Africa</strong> and is expanding daily. There is no safe zone.</p>
+      <div class="evac-hotline">FRAUD SURVIVOR HOTLINE: 0800-BRETT-WON</div>
+    </div>
+  </section>
+
+  <!-- ════════ CLASSIFIED (Konami Easter Egg) ════════ -->
+  <section class="classified-section" id="classifiedSection">
+    <h2>🔓 CLASSIFIED FILE UNLOCKED</h2>
+    <p>You found the secret. Here's what they don't want you to know: Brett Chait isn't just fighting fraud. He's waging a one-man philosophical war on dishonesty itself. Sources say he once audited his own grocery receipt and found a discrepancy of R0.03. He reported it. The store manager wept.</p>
+    <p style="margin-top: 1.5rem; color: var(--gold);">Some say he doesn't verify payments. Payments verify themselves out of respect.</p>
+  </section>
+
+  <!-- ════════ FOOTER ════════ -->
+  <footer class="site-footer">
+    <div class="footer-network">GLOBAL FRAUD CRISIS NETWORK</div>
+    <div class="footer-disclaimer">
+      This broadcast is a work of complete and utter satire. Brett Chait is a real person who is genuinely excellent at his job, which is the entire joke. No actual fraudsters were interviewed, though several probably should be. GFCN is not a real network. The International Fraudsters' Union does not exist (as far as we know). "Know Your Payee" is a registered trademark of Eftsure. All fraud statistics are fictional. Brett's actual impact is probably worse than depicted here. © 2026 GFCN, A Division of People Who Think Brett Is Excellent.
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════ -->
+  <script>
+    // ── State ──
+    let nameClicks = 0;
+    let hasVoted = false;
+    let konamiProgress = 0;
+    const konamiCode = [38,38,40,40,37,39,37,39,66,65]; // ↑↑↓↓←→←→BA
+
+    // ── Enter Site ──
+    function enterSite() {
+      document.getElementById('splash').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+      document.getElementById('liveBadge').classList.add('visible');
+      document.getElementById('newsTicker').classList.add('visible');
+      initTicker();
+      initTimestamp();
+      initScrollReveal();
+      startCounters();
+      schedulePopups();
+      initThreatMeter();
+      initStockTable();
+
+      // Console Easter egg
+      console.log('%c🚨 GFCN INTERNAL MEMO 🚨', 'font-size: 20px; color: #cc0000; font-weight: bold;');
+      console.log('%cIf you are reading this, you are either:\n1. A developer (respect)\n2. Brett Chait auditing this page\'s source code (extremely on-brand)\n3. A fraudster looking for vulnerabilities (Brett sees you)', 'font-size: 13px; color: #7a7a85;');
+      console.log('%cKonami code is active. You know what to do.', 'font-size: 11px; color: #e8b230;');
+    }
+
+    // Prevent scroll before entering
+    document.body.style.overflow = 'hidden';
+
+    // ── News Ticker ──
+    const tickerItems = [
+      'FRAUD INDUSTRY GDP DROPS 89% — ECONOMISTS BLAME SINGLE JOHANNESBURG MAN',
+      'NIGERIAN PRINCE EMAIL OPERATORS HOLD CANDLELIGHT VIGIL FOR "THE OLD DAYS"',
+      'EFTSURE PROCESSES R20.5 BILLION IN MONTHLY VERIFICATIONS — FRAUDSTERS CALL IT "OVERKILL"',
+      'BRETT CHAIT REPORTEDLY "JUST GOING ABOUT HIS DAY" WHILE ENTIRE CRIMINAL SECTOR IMPLODES',
+      'INTERNATIONAL FRAUDSTERS\' UNION VOTES TO FORMALLY CLASSIFY BRETT CHAIT AS "UNFAIR"',
+      'KING DAVID HIGH SCHOOL ALUMNI NEWSLETTER: "WE ALWAYS KNEW HE\'D BE TROUBLE"',
+      'FAKE INVOICE MANUFACTURERS PIVOT TO LEGITIMATE STATIONERY BUSINESS',
+      'UNIVERSITY OF JOHANNESBURG BCOM PROGRAM SEES 400% ENROLLMENT SPIKE — "THE CHAIT EFFECT"',
+      'LEAKED: INTERPOL CONSIDERED RECRUITING BRETT CHAIT — DECIDED HE WAS "TOO EFFECTIVE, MAKES US LOOK BAD"',
+      'LOCAL MAN LITERALLY TOO GOOD AT HIS JOB, DESTABILIZES GLOBAL CRIMINAL ECONOMY',
+      'R400 BILLION IN PAYMENTS PROTECTED — "THOSE WERE OUR PAYMENTS," WEEPS UNNAMED FRAUDSTER',
+      'CYBERCRIME SYNDICATES REPORT RECORD LOW MORALE — HR DEPARTMENTS STRUGGLING TO RETAIN TALENT',
+      'BRETT CHAIT SPOTTED EATING LUNCH CALMLY — FRAUD STOCKS DROP ANOTHER 12%'
+    ];
+
+    function initTicker() {
+      const container = document.getElementById('tickerContent');
+      // Duplicate for seamless loop
+      const items = [...tickerItems, ...tickerItems];
+      container.innerHTML = items.map(item => `<span>${item}</span>`).join('');
+    }
+
+    // ── Timestamp ──
+    function initTimestamp() {
+      const el = document.getElementById('heroTimestamp');
+      function update() {
+        const now = new Date();
+        const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
+        el.textContent = now.toLocaleDateString('en-ZA', opts) + ' — SAST';
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    // ── Scroll Reveal ──
+    function initScrollReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
+
+    // ── Counters ──
+    function startCounters() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseInt(el.dataset.count);
+            const suffix = el.dataset.suffix || '';
+            const prefix = el.dataset.prefix || '';
+            if (el.dataset.counted) return;
+            el.dataset.counted = 'true';
+            animateCounter(el, target, suffix, prefix);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      document.querySelectorAll('.crisis-stat-value[data-count]').forEach(el => observer.observe(el));
+    }
+
+    function animateCounter(el, target, suffix, prefix) {
+      const duration = 2000;
+      const start = performance.now();
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(eased * target);
+        el.textContent = prefix + current.toLocaleString() + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // ── Threat Meter ──
+    function initThreatMeter() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const fill = document.getElementById('threatFill');
+            const result = document.getElementById('threatResult');
+            setTimeout(() => {
+              fill.style.width = '98%';
+              setTimeout(() => {
+                result.textContent = 'THREAT LEVEL: BEYOND MAXIMUM';
+                result.style.animation = 'flashText 0.5s ease-in-out 3';
+              }, 2200);
+            }, 500);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      observer.observe(document.getElementById('threatMeter'));
+    }
+
+    // ── Stock Table ──
+    function initStockTable() {
+      const stocks = [
+        { ticker: 'SCAM', name: 'ScamCorp International', price: 0.03, change: -99.7, bars: [90,80,70,50,30,15,3] },
+        { ticker: 'PHISH', name: 'Global Phishing Holdings', price: 0.12, change: -98.2, bars: [85,75,60,45,25,10,5] },
+        { ticker: 'FAKE', name: 'FakeInvoice Ltd.', price: 0.01, change: -99.9, bars: [95,85,70,40,20,5,1] },
+        { ticker: 'BEC', name: 'Business Email Compromise Corp', price: 0.08, change: -97.5, bars: [80,70,55,40,25,12,4] },
+        { ticker: 'LAUNDER', name: 'CleanMoney Services', price: 0.22, change: -94.1, bars: [70,65,50,35,25,18,10] },
+        { ticker: 'INSIDE', name: 'InsiderScam Holdings', price: 0.00, change: -100.0, bars: [88,72,58,35,15,3,0] },
+        { ticker: '419', name: 'Nigerian Prince Ventures', price: 0.05, change: -98.8, bars: [92,78,55,30,12,6,2] },
+      ];
+
+      const table = document.getElementById('stockTable');
+      stocks.forEach(stock => {
+        const row = document.createElement('div');
+        row.className = 'stock-row';
+        const maxBar = Math.max(...stock.bars);
+        const barsHTML = stock.bars.map(b => `<div class="bar" style="height: ${(b/maxBar)*100}%"></div>`).join('');
+        row.innerHTML = `
+          <div class="stock-name">
+            <span class="stock-ticker-symbol">${stock.ticker}</span>
+            <span class="stock-company">${stock.name}</span>
+          </div>
+          <span class="stock-price mono">R${stock.price.toFixed(2)}</span>
+          <span class="stock-change">▼ ${stock.change.toFixed(1)}%</span>
+          <div class="stock-chart-mini">${barsHTML}</div>
+        `;
+        table.appendChild(row);
+      });
+    }
+
+    // ── Breaking Popups ──
+    const popupMessages = [
+      'Three more fraud syndicates have filed for bankruptcy citing "the Brett Chait situation." Combined employees affected: 847.',
+      'JUST IN: Brett Chait seen leaving Woolworths with groceries. Fraud stocks immediately drop another 4%. Analysts say "even his casual errands radiate verification energy."',
+      'DEVELOPING: A phishing email addressed to an Eftsure client was automatically flagged, quarantined, analyzed, and used as a case study in a fraud prevention webinar — all within 11 seconds.',
+      'UPDATE: The International Fraudsters\' Union has voted to add Brett Chait\'s birthday to their official calendar of mourning.',
+    ];
+    let popupIndex = 0;
+
+    function schedulePopups() {
+      setTimeout(() => showPopup(), 25000);
+      setTimeout(() => showPopup(), 65000);
+      setTimeout(() => showPopup(), 120000);
+      setTimeout(() => showPopup(), 200000);
+    }
+
+    function showPopup() {
+      if (popupIndex >= popupMessages.length) return;
+      const popup = document.getElementById('breakingPopup');
+      document.getElementById('breakingPopupText').textContent = popupMessages[popupIndex++];
+      popup.classList.add('show');
+      setTimeout(() => closePopup(), 8000);
+    }
+
+    function closePopup() {
+      document.getElementById('breakingPopup').classList.remove('show');
+    }
+
+    // ── Name Click Easter Egg ──
+    document.getElementById('heroTitle').addEventListener('click', () => {
+      nameClicks++;
+      const counter = document.getElementById('clickCounter');
+      if (nameClicks >= 3) {
+        counter.classList.add('visible');
+      }
+      if (nameClicks < 10) {
+        counter.textContent = `TIMES CLICKED: ${nameClicks}`;
+      } else if (nameClicks < 20) {
+        counter.textContent = `OBSESSION LEVEL: ${nameClicks}`;
+      } else if (nameClicks < 50) {
+        counter.textContent = `SIR, THIS IS CONCERNING: ${nameClicks}`;
+      } else {
+        counter.textContent = `BRETT CHAIT FAN CLUB MEMBER #${nameClicks}`;
+      }
+    });
+
+    // ── Poll ──
+    function vote(index) {
+      if (hasVoted) return;
+      hasVoted = true;
+      const options = document.querySelectorAll('.poll-option');
+      options[index].classList.add('selected');
+      options.forEach(o => o.style.cursor = 'default');
+
+      const results = document.getElementById('pollResults');
+      results.classList.add('visible');
+
+      // Animate result bars
+      setTimeout(() => {
+        document.querySelectorAll('.poll-result-fill').forEach(fill => {
+          fill.style.width = fill.dataset.width + '%';
+        });
+      }, 100);
+
+      // Animate total votes
+      const totalEl = document.getElementById('pollTotal');
+      const targetTotal = 847293;
+      const start = performance.now();
+      function tick(now) {
+        const progress = Math.min((now - start) / 1500, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        totalEl.textContent = Math.round(eased * targetTotal).toLocaleString();
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // ── Konami Code ──
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === konamiCode[konamiProgress]) {
+        konamiProgress++;
+        if (konamiProgress === konamiCode.length) {
+          document.getElementById('classifiedSection').classList.add('unlocked');
+          document.getElementById('classifiedSection').scrollIntoView({ behavior: 'smooth' });
+          konamiProgress = 0;
+        }
+      } else {
+        konamiProgress = 0;
+      }
+    });
+
+    // ── Periodically update stock prices (make them jitter down) ──
+    setInterval(() => {
+      document.querySelectorAll('.stock-price').forEach(el => {
+        const current = parseFloat(el.textContent.replace('R', ''));
+        const jitter = current * (Math.random() * 0.1);
+        const newPrice = Math.max(0, current - jitter);
+        el.textContent = 'R' + newPrice.toFixed(2);
+      });
+    }, 5000);
+  </script>
+</body>
+</html>
