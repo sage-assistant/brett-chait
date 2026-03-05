@@ -36,7 +36,104 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ═══ SPLASH ═══ */
+    /* ═══════════════════════════════════════
+       PASSWORD GATE
+    ═══════════════════════════════════════ */
+    .password-gate {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 20000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      transition: opacity 0.8s, visibility 0.8s;
+    }
+    .password-gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .pw-lock-icon {
+      width: 48px;
+      height: 48px;
+      border: 2px solid var(--text-muted);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      position: relative;
+    }
+    .pw-lock-icon::before {
+      content: '';
+      width: 16px;
+      height: 12px;
+      border: 2px solid var(--text-muted);
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      position: absolute;
+      top: -10px;
+    }
+    .pw-lock-icon::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--text-muted);
+      border-radius: 50%;
+    }
+
+    .pw-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.4em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .pw-input-wrap {
+      position: relative;
+      width: 280px;
+    }
+
+    .pw-input {
+      width: 100%;
+      padding: 0.9rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .pw-input:focus { border-color: var(--accent); }
+    .pw-input::placeholder { color: var(--text-muted); letter-spacing: 0.2em; }
+
+    .pw-error {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--red);
+      margin-top: 1rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      letter-spacing: 0.1em;
+    }
+    .pw-error.visible { opacity: 1; }
+
+    .pw-hint {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-top: 2.5rem;
+      opacity: 0.5;
+    }
+
+    /* ═══════════════════════════════════════
+       SPLASH
+    ═══════════════════════════════════════ */
     .splash {
       position: fixed;
       inset: 0;
@@ -102,10 +199,7 @@
       cursor: pointer;
       transition: all 0.4s;
     }
-    .enter-btn:hover {
-      background: var(--accent);
-      color: var(--bg);
-    }
+    .enter-btn:hover { background: var(--accent); color: var(--bg); }
 
     .splash-note {
       position: absolute;
@@ -115,7 +209,9 @@
       letter-spacing: 0.05em;
     }
 
-    /* ═══ GLOBAL ═══ */
+    /* ═══════════════════════════════════════
+       GLOBAL
+    ═══════════════════════════════════════ */
     .gradient-bg {
       position: fixed; inset: 0;
       background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(200,160,74,0.02) 0%, transparent 60%);
@@ -132,7 +228,6 @@
     }
 
     .container { max-width: 1000px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); position: relative; z-index: 1; }
-    .container-wide { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); position: relative; z-index: 1; }
 
     .serif { font-family: 'Cormorant Garamond', serif; }
     .mono { font-family: 'JetBrains Mono', monospace; }
@@ -162,58 +257,39 @@
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    .thin-rule {
-      width: 40px;
-      height: 1px;
-      background: var(--accent);
-      margin: 1.5rem 0;
-    }
-    .thin-rule-center {
-      width: 40px;
-      height: 1px;
-      background: var(--accent);
-      margin: 1.5rem auto;
-    }
+    .reveal-delay-1 { transition-delay: 0.15s; }
+    .reveal-delay-2 { transition-delay: 0.3s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
+    .reveal-delay-4 { transition-delay: 0.6s; }
 
-    /* ═══ CHAPTER BADGE ═══ */
-    .chapter-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .chapter-number {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.3em;
-      color: var(--accent);
-      text-transform: uppercase;
-    }
-    .chapter-line {
-      width: 40px;
-      height: 1px;
-      background: var(--accent);
-      opacity: 0.4;
-    }
+    .thin-rule { width: 40px; height: 1px; background: var(--accent); margin: 1.5rem 0; }
+    .thin-rule-center { width: 40px; height: 1px; background: var(--accent); margin: 1.5rem auto; }
 
-    /* ═══ IMAGE SECTIONS ═══ */
-    .full-image {
-      width: 100%;
-      height: 50vh;
-      min-height: 300px;
-      object-fit: cover;
-      display: block;
-      filter: brightness(0.6) contrast(1.1);
-    }
+    .chapter-badge { display: inline-flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+    .chapter-number { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.3em; color: var(--accent); text-transform: uppercase; }
+    .chapter-line { width: 40px; height: 1px; background: var(--accent); opacity: 0.4; }
 
+    /* ═══ IMAGE SECTIONS (PARALLAX) ═══ */
     .image-section {
       position: relative;
       overflow: hidden;
+      height: 50vh;
+      min-height: 300px;
+    }
+    .parallax-img {
+      position: absolute;
+      inset: -20% 0;
+      width: 100%;
+      height: 140%;
+      object-fit: cover;
+      filter: brightness(0.55) contrast(1.1);
+      will-change: transform;
     }
     .image-overlay {
       position: absolute;
       inset: 0;
       background: linear-gradient(180deg, var(--bg) 0%, transparent 30%, transparent 70%, var(--bg) 100%);
+      z-index: 1;
     }
     .image-caption {
       position: absolute;
@@ -223,6 +299,7 @@
       font-size: 0.55rem;
       color: var(--text-muted);
       letter-spacing: 0.15em;
+      z-index: 2;
     }
 
     /* ═══ HERO ═══ */
@@ -235,10 +312,7 @@
       position: relative;
     }
 
-    .hero-overline {
-      opacity: 0;
-      animation: fadeIn 1.2s ease-out 0.3s forwards;
-    }
+    .hero-overline { opacity: 0; animation: fadeIn 1.2s ease-out 0.3s forwards; }
 
     .hero-title {
       font-size: clamp(2.5rem, 6vw, 4.5rem);
@@ -250,11 +324,7 @@
       animation: fadeUp 1.2s ease-out 0.5s forwards;
       cursor: default;
     }
-
-    .hero-title .highlight {
-      color: var(--accent);
-      font-weight: 400;
-    }
+    .hero-title .highlight { color: var(--accent); font-weight: 400; }
 
     .hero-subtitle {
       font-size: 1.05rem;
@@ -262,9 +332,21 @@
       color: var(--text-dim);
       max-width: 650px;
       line-height: 1.9;
+      min-height: 6em;
       opacity: 0;
       animation: fadeUp 1.2s ease-out 0.8s forwards;
     }
+
+    .typing-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--accent);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: cursorBlink 0.8s ease-in-out infinite;
+    }
+    @keyframes cursorBlink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 
     .hero-meta {
       margin-top: 3rem;
@@ -280,663 +362,12 @@
       color: var(--text-muted);
       letter-spacing: 0.1em;
     }
-
-    .hero-meta-item span {
-      display: block;
-      color: var(--text-dim);
-      margin-top: 0.25rem;
-      font-size: 0.7rem;
-    }
+    .hero-meta-item span { display: block; color: var(--text-dim); margin-top: 0.25rem; font-size: 0.7rem; }
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ═══ THE MAN (PROFILE) ═══ */
-    .profile-layout {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 4rem;
-      align-items: start;
-    }
-
-    .profile-sidebar {
-      position: sticky;
-      top: 4rem;
-    }
-
-    .profile-photo-frame {
-      width: 100%;
-      aspect-ratio: 3/4;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .profile-silhouette {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: var(--surface-3);
-      margin-bottom: 1rem;
-    }
-
-    .profile-photo-text {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.5rem;
-      color: var(--text-muted);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    .profile-stamp {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-18deg);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--red);
-      border: 3px solid var(--red);
-      padding: 0.15rem 1.5rem;
-      opacity: 0.5;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    .profile-designations {
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .profile-designations dt {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.5rem;
-      letter-spacing: 0.2em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 0.25rem;
-    }
-
-    .profile-designations dd {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      margin-bottom: 1.25rem;
-    }
-
-    .profile-main h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 300;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.5rem;
-    }
-
-    .profile-aliases {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      margin-bottom: 2rem;
-    }
-
-    .profile-body p {
-      font-size: 0.95rem;
-      color: var(--text-dim);
-      line-height: 2;
-      margin-bottom: 1.5rem;
-    }
-
-    .profile-body strong { color: var(--text); font-weight: 600; }
-
-    /* Threat Meter */
-    .threat-assessment {
-      margin-top: 3rem;
-      padding: 2rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-    }
-
-    .threat-assessment-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.5rem;
-      letter-spacing: 0.3em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .threat-bar-track {
-      height: 4px;
-      background: var(--surface-3);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
-    .threat-bar-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--accent), var(--red));
-      border-radius: 2px;
-      transition: width 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    .threat-labels {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 0.75rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.45rem;
-      color: var(--text-muted);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    .threat-verdict {
-      text-align: right;
-      margin-top: 0.75rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      font-style: italic;
-      color: var(--red);
-      opacity: 0;
-      transition: opacity 0.8s;
-    }
-    .threat-verdict.visible { opacity: 1; }
-
-    /* ═══ THE WEAPON ═══ */
-    .weapon-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin: 3rem 0;
-    }
-
-    .weapon-stat {
-      padding: 2.5rem 2rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      text-align: center;
-    }
-
-    .weapon-stat-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
-      font-weight: 300;
-      color: var(--accent);
-      letter-spacing: 0.05em;
-      margin-bottom: 0.5rem;
-    }
-
-    .weapon-stat-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.55rem;
-      color: var(--text-muted);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    .weapon-classification {
-      margin-top: 3rem;
-      padding: 2.5rem;
-      border: 1px solid var(--accent);
-      position: relative;
-    }
-
-    .weapon-classification-label {
-      position: absolute;
-      top: -10px;
-      left: 2rem;
-      background: var(--bg);
-      padding: 0 1rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.5rem;
-      color: var(--accent);
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-    }
-
-    .weapon-classification p {
-      font-size: 0.95rem;
-      color: var(--text-dim);
-      line-height: 2;
-      margin-bottom: 1.25rem;
-    }
-    .weapon-classification p:last-child { margin-bottom: 0; }
-    .weapon-classification strong { color: var(--text); }
-
-    /* ═══ VOICES / TESTIMONIALS ═══ */
-    .voices-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    .voice-card {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 2.5rem;
-      padding: 2.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      align-items: start;
-    }
-
-    .voice-source {
-      border-right: 1px solid var(--border);
-      padding-right: 2rem;
-    }
-
-    .voice-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    }
-
-    .voice-title {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .voice-location {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.5rem;
-      color: var(--accent);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-top: 1rem;
-    }
-
-    .voice-quote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.15rem;
-      font-style: italic;
-      font-weight: 300;
-      color: var(--text-dim);
-      line-height: 1.9;
-      position: relative;
-      padding-left: 1.5rem;
-      border-left: 1px solid var(--accent);
-    }
-
-    /* ═══ STOCK MARKET ═══ */
-    .stock-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .stock-table thead th {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.5rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      text-align: left;
-      padding: 1rem 1.25rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .stock-table tbody td {
-      padding: 1.25rem;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.85rem;
-    }
-
-    .stock-table tbody tr {
-      transition: background 0.2s;
-    }
-    .stock-table tbody tr:hover {
-      background: var(--surface);
-    }
-
-    .stock-symbol {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 600;
-      font-size: 0.8rem;
-    }
-
-    .stock-fullname {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 0.15rem;
-    }
-
-    .stock-price-val {
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .stock-change-val {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 600;
-      color: var(--red);
-    }
-
-    .mini-chart {
-      display: flex;
-      align-items: flex-end;
-      gap: 2px;
-      height: 24px;
-    }
-    .mini-chart .bar {
-      width: 3px;
-      background: var(--red);
-      border-radius: 1px;
-      opacity: 0.6;
-    }
-
-    /* ═══ LAWSUIT ═══ */
-    .lawsuit-document {
-      max-width: 750px;
-      margin: 0 auto;
-      padding: 3.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-    }
-
-    .lawsuit-header-bar {
-      text-align: center;
-      padding-bottom: 2.5rem;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 2.5rem;
-    }
-
-    .lawsuit-court {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.5rem;
-      color: var(--text-muted);
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-
-    .lawsuit-case-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.5rem;
-    }
-
-    .lawsuit-case-number {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-    }
-
-    .lawsuit-body p {
-      font-size: 0.9rem;
-      color: var(--text-dim);
-      line-height: 2;
-      margin-bottom: 1.5rem;
-      text-indent: 2rem;
-    }
-    .lawsuit-body strong { color: var(--text); }
-
-    .charges-block {
-      margin: 2.5rem 0;
-      padding: 2rem 2.5rem;
-      border-left: 2px solid var(--accent);
-      background: var(--accent-soft);
-    }
-
-    .charges-block h4 {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.5rem;
-      color: var(--accent);
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      margin-bottom: 1.25rem;
-    }
-
-    .charges-block ol {
-      padding-left: 1.25rem;
-    }
-
-    .charges-block li {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      margin-bottom: 1rem;
-      line-height: 1.8;
-    }
-    .charges-block li strong { color: var(--text); }
-
-    .lawsuit-stamp {
-      text-align: center;
-      margin-top: 2.5rem;
-      padding-top: 2.5rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .lawsuit-stamp-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--red);
-      transform: rotate(-4deg);
-      display: inline-block;
-      border: 3px solid var(--red);
-      padding: 0.1rem 2rem;
-      opacity: 0.5;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    /* ═══ POLL ═══ */
-    .poll-box {
-      max-width: 650px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .poll-question {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      font-weight: 400;
-      line-height: 1.5;
-      margin-bottom: 2.5rem;
-    }
-
-    .poll-options {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      text-align: left;
-    }
-
-    .poll-option {
-      padding: 1rem 1.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      cursor: pointer;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-size: 0.85rem;
-      color: var(--text-dim);
-    }
-
-    .poll-option:hover { border-color: var(--accent); color: var(--text); }
-    .poll-option.selected { border-color: var(--accent); background: var(--accent-soft); color: var(--text); }
-
-    .poll-radio {
-      width: 16px;
-      height: 16px;
-      border: 1px solid var(--text-muted);
-      border-radius: 50%;
-      flex-shrink: 0;
-      position: relative;
-      transition: all 0.3s;
-    }
-    .poll-option.selected .poll-radio {
-      border-color: var(--accent);
-    }
-    .poll-option.selected .poll-radio::after {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 8px; height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-    }
-
-    .poll-results {
-      display: none;
-      margin-top: 2.5rem;
-      text-align: left;
-    }
-    .poll-results.visible { display: block; animation: fadeUp 0.6s ease-out; }
-
-    .poll-result-row { margin-bottom: 1.25rem; }
-    .poll-result-label-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      margin-bottom: 0.5rem;
-    }
-    .poll-result-pct {
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--accent);
-    }
-    .poll-result-track {
-      height: 3px;
-      background: var(--surface-3);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .poll-result-fill {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 2px;
-      width: 0%;
-      transition: width 1.5s ease-out;
-    }
-    .poll-total {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--text-muted);
-      margin-top: 1.5rem;
-      text-align: center;
-      letter-spacing: 0.1em;
-    }
-
-    /* ═══ EVACUATION ═══ */
-    .evacuation-frame {
-      max-width: 700px;
-      margin: 0 auto;
-      border: 1px solid var(--accent);
-      padding: 4rem 3rem;
-      text-align: center;
-      position: relative;
-    }
-
-    .evacuation-frame-label {
-      position: absolute;
-      top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--bg);
-      padding: 0 1.5rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.5rem;
-      color: var(--accent);
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .evacuation-frame h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.3rem, 3vw, 1.8rem);
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      margin-bottom: 2rem;
-      color: var(--accent);
-      line-height: 1.4;
-    }
-
-    .evacuation-frame p {
-      font-size: 0.9rem;
-      color: var(--text-dim);
-      line-height: 2;
-      margin-bottom: 1.25rem;
-    }
-    .evacuation-frame strong { color: var(--text); }
-
-    .evac-hotline {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.9rem;
-      color: var(--red);
-      margin-top: 2rem;
-      padding: 0.75rem 2rem;
-      border: 1px solid var(--red);
-      display: inline-block;
-      letter-spacing: 0.1em;
-    }
-
-    /* ═══ CLASSIFIED (Konami) ═══ */
-    .classified-section {
-      display: none;
-      text-align: center;
-      padding: 5rem 2rem;
-      border-top: 1px solid var(--accent);
-      border-bottom: 1px solid var(--accent);
-    }
-    .classified-section.unlocked { display: block; animation: unlockReveal 0.8s ease-out; }
-    @keyframes unlockReveal { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-
-    .classified-section h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
-      font-weight: 300;
-      color: var(--accent);
-      letter-spacing: 0.15em;
-      margin-bottom: 1.5rem;
-    }
-    .classified-section p {
-      font-size: 0.95rem;
-      color: var(--text-dim);
-      line-height: 2;
-      max-width: 550px;
-      margin: 0 auto 1rem;
-    }
-
-    /* ═══ FOOTER ═══ */
-    .site-footer {
-      padding: 4rem 2rem 5rem;
-      text-align: center;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      color: var(--text-dim);
-      margin-bottom: 1.5rem;
-    }
-
-    .footer-note {
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      max-width: 550px;
-      margin: 0 auto;
-      line-height: 2;
-    }
-
-    /* ═══ CLICK COUNTER (Easter Egg) ═══ */
+    /* Click counter */
     .click-counter {
       position: fixed;
       bottom: 2rem;
@@ -951,6 +382,532 @@
     }
     .click-counter.visible { opacity: 0.6; }
 
+    /* ═══ PROFILE ═══ */
+    .profile-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .profile-sidebar { position: sticky; top: 4rem; }
+
+    .profile-photo-frame {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .profile-silhouette {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--surface-3);
+      margin-bottom: 1rem;
+    }
+    .profile-photo-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      color: var(--text-muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .profile-stamp {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-18deg);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--red);
+      border: 3px solid var(--red);
+      padding: 0.15rem 1.5rem;
+      opacity: 0.5;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .profile-designations { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .profile-designations dt {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; letter-spacing: 0.2em;
+      color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem;
+    }
+    .profile-designations dd { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 1.25rem; }
+
+    .profile-main h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300; letter-spacing: 0.08em; margin-bottom: 0.5rem;
+    }
+    .profile-aliases {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 2rem;
+    }
+    .profile-body p { font-size: 0.95rem; color: var(--text-dim); line-height: 2; margin-bottom: 1.5rem; }
+    .profile-body strong { color: var(--text); font-weight: 600; }
+
+    /* Threat Meter */
+    .threat-assessment {
+      margin-top: 3rem; padding: 2rem;
+      background: var(--surface); border: 1px solid var(--border);
+    }
+    .threat-assessment-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; letter-spacing: 0.3em;
+      color: var(--text-muted); text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .threat-bar-track { height: 4px; background: var(--surface-3); border-radius: 2px; overflow: hidden; }
+    .threat-bar-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--red));
+      border-radius: 2px;
+      transition: width 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .threat-labels {
+      display: flex; justify-content: space-between; margin-top: 0.75rem;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.45rem;
+      color: var(--text-muted); letter-spacing: 0.15em; text-transform: uppercase;
+    }
+    .threat-verdict {
+      text-align: right; margin-top: 0.75rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-style: italic; color: var(--red);
+      opacity: 0; transition: opacity 0.8s;
+    }
+    .threat-verdict.visible { opacity: 1; }
+
+    /* ═══ WEAPON STATS ═══ */
+    .weapon-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin: 3rem 0; }
+    .weapon-stat {
+      padding: 2.5rem 2rem;
+      background: var(--surface); border: 1px solid var(--border);
+      text-align: center;
+    }
+    .weapon-stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 300; color: var(--accent);
+      letter-spacing: 0.05em; margin-bottom: 0.5rem;
+    }
+    .weapon-stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem; color: var(--text-muted);
+      letter-spacing: 0.15em; text-transform: uppercase;
+    }
+
+    .weapon-classification {
+      margin-top: 3rem; padding: 2.5rem;
+      border: 1px solid var(--accent); position: relative;
+    }
+    .weapon-classification-label {
+      position: absolute; top: -10px; left: 2rem;
+      background: var(--bg); padding: 0 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; color: var(--accent);
+      letter-spacing: 0.3em; text-transform: uppercase;
+    }
+    .weapon-classification p { font-size: 0.95rem; color: var(--text-dim); line-height: 2; margin-bottom: 1.25rem; }
+    .weapon-classification p:last-child { margin-bottom: 0; }
+    .weapon-classification strong { color: var(--text); }
+
+    /* ═══ PROXIMITY DETECTOR ═══ */
+    .proximity-section { text-align: center; }
+
+    .radar-container {
+      width: 280px; height: 280px;
+      margin: 2rem auto;
+      position: relative;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .radar-grid-circle {
+      position: absolute;
+      border: 1px solid rgba(200,160,74,0.06);
+      border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .radar-grid-1 { width: 80%; height: 80%; }
+    .radar-grid-2 { width: 55%; height: 55%; }
+    .radar-grid-3 { width: 30%; height: 30%; }
+
+    .radar-crosshair-h, .radar-crosshair-v {
+      position: absolute;
+      background: rgba(200,160,74,0.06);
+    }
+    .radar-crosshair-h { width: 100%; height: 1px; top: 50%; }
+    .radar-crosshair-v { height: 100%; width: 1px; left: 50%; }
+
+    .radar-sweep {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 50%; height: 50%;
+      transform-origin: 0 0;
+      animation: radarSweep 3s linear infinite;
+      background: conic-gradient(from 0deg, transparent 0deg, rgba(200,160,74,0.12) 40deg, transparent 40deg);
+    }
+    @keyframes radarSweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .radar-blip {
+      position: absolute;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: blipPulse 2s ease-in-out infinite;
+    }
+    @keyframes blipPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.8); } }
+
+    .radar-blip-1 { top: 48%; left: 52%; }
+    .radar-blip-2 { top: 35%; left: 65%; animation-delay: 0.7s; width: 5px; height: 5px; opacity: 0.5; }
+    .radar-blip-3 { top: 60%; left: 40%; animation-delay: 1.4s; width: 5px; height: 5px; opacity: 0.5; }
+
+    .radar-label {
+      position: absolute;
+      bottom: 1.5rem; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .proximity-result {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--red);
+      letter-spacing: 0.1em;
+      margin-top: 1rem;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .proximity-result.visible { opacity: 1; }
+
+    /* ═══ RISK CALCULATOR ═══ */
+    .calculator-box {
+      max-width: 550px;
+      margin: 3rem auto 0;
+      padding: 2.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .calc-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; letter-spacing: 0.3em;
+      color: var(--text-muted); text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .calc-input-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .calc-input {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .calc-input:focus { border-color: var(--accent); }
+    .calc-input::placeholder { color: var(--text-muted); }
+
+    .calc-btn {
+      padding: 0.8rem 2rem;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+    .calc-btn:hover { background: var(--accent); color: var(--bg); }
+
+    .calc-result {
+      display: none;
+      margin-top: 1.5rem;
+      padding: 2rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .calc-result.visible { display: block; animation: fadeUp 0.6s ease-out; }
+
+    .calc-percentage {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--red);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .calc-message {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    .calc-progress-bar {
+      width: 100%;
+      height: 3px;
+      background: var(--surface-3);
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    .calc-progress-fill {
+      height: 100%;
+      background: var(--red);
+      width: 0%;
+      transition: width 1.5s ease-out;
+    }
+
+    /* ═══ EXCUSE GENERATOR ═══ */
+    .excuse-box {
+      max-width: 650px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .excuse-output {
+      min-height: 100px;
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text-dim);
+      line-height: 1.8;
+      position: relative;
+    }
+
+    .excuse-output-label {
+      position: absolute;
+      top: -10px;
+      left: 1.5rem;
+      background: var(--bg);
+      padding: 0 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.45rem;
+      color: var(--text-muted);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+    }
+
+    .excuse-btn {
+      padding: 0.9rem 2.5rem;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .excuse-btn:hover { background: var(--accent); color: var(--bg); }
+
+    .excuse-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ═══ VOICES / TESTIMONIALS ═══ */
+    .voices-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+
+    .voice-card {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 2.5rem;
+      padding: 2.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      align-items: start;
+      transition: border-color 0.4s, transform 0.4s;
+    }
+    .voice-card:hover { border-color: rgba(200,160,74,0.15); transform: translateY(-2px); }
+
+    .voice-source { border-right: 1px solid var(--border); padding-right: 2rem; }
+    .voice-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 500; margin-bottom: 0.5rem; }
+    .voice-title { font-size: 0.7rem; color: var(--text-muted); line-height: 1.6; }
+    .voice-location {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; color: var(--accent);
+      letter-spacing: 0.15em; text-transform: uppercase; margin-top: 1rem;
+    }
+    .voice-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-style: italic; font-weight: 300;
+      color: var(--text-dim); line-height: 1.9;
+      padding-left: 1.5rem; border-left: 1px solid var(--accent);
+    }
+
+    /* ═══ STOCK TABLE ═══ */
+    .stock-table { width: 100%; border-collapse: collapse; }
+    .stock-table thead th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-muted);
+      text-align: left; padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .stock-table tbody td { padding: 1.25rem; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+    .stock-table tbody tr { transition: background 0.2s; }
+    .stock-table tbody tr:hover { background: var(--surface); }
+
+    .stock-symbol { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 0.8rem; }
+    .stock-fullname { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.15rem; }
+    .stock-price-val { font-family: 'JetBrains Mono', monospace; }
+    .stock-change-val { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--red); }
+
+    .mini-chart { display: flex; align-items: flex-end; gap: 2px; height: 24px; }
+    .mini-chart .bar { width: 3px; background: var(--red); border-radius: 1px; opacity: 0.6; }
+
+    /* ═══ LAWSUIT ═══ */
+    .lawsuit-document {
+      max-width: 750px; margin: 0 auto;
+      padding: 3.5rem; background: var(--surface);
+      border: 1px solid var(--border);
+    }
+    .lawsuit-header-bar { text-align: center; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
+    .lawsuit-court {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; color: var(--text-muted);
+      letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 1.5rem;
+    }
+    .lawsuit-case-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .lawsuit-case-number { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.1em; }
+    .lawsuit-body p { font-size: 0.9rem; color: var(--text-dim); line-height: 2; margin-bottom: 1.5rem; text-indent: 2rem; }
+    .lawsuit-body strong { color: var(--text); }
+
+    .charges-block { margin: 2.5rem 0; padding: 2rem 2.5rem; border-left: 2px solid var(--accent); background: var(--accent-soft); }
+    .charges-block h4 { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; color: var(--accent); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 1.25rem; }
+    .charges-block ol { padding-left: 1.25rem; }
+    .charges-block li { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 1rem; line-height: 1.8; }
+    .charges-block li strong { color: var(--text); }
+
+    .lawsuit-stamp { text-align: center; margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); }
+    .lawsuit-stamp-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem; font-weight: 700; color: var(--red);
+      transform: rotate(-4deg); display: inline-block;
+      border: 3px solid var(--red); padding: 0.1rem 2rem;
+      opacity: 0.5; letter-spacing: 0.2em; text-transform: uppercase;
+    }
+
+    /* ═══ POLL ═══ */
+    .poll-box { max-width: 650px; margin: 0 auto; text-align: center; }
+    .poll-question { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; line-height: 1.5; margin-bottom: 2.5rem; }
+    .poll-options { display: flex; flex-direction: column; gap: 0.75rem; text-align: left; }
+    .poll-option {
+      padding: 1rem 1.5rem; background: var(--surface);
+      border: 1px solid var(--border); cursor: pointer;
+      transition: all 0.3s; display: flex; align-items: center;
+      gap: 1rem; font-size: 0.85rem; color: var(--text-dim);
+    }
+    .poll-option:hover { border-color: var(--accent); color: var(--text); }
+    .poll-option.selected { border-color: var(--accent); background: var(--accent-soft); color: var(--text); }
+    .poll-radio {
+      width: 16px; height: 16px;
+      border: 1px solid var(--text-muted); border-radius: 50%;
+      flex-shrink: 0; position: relative; transition: all 0.3s;
+    }
+    .poll-option.selected .poll-radio { border-color: var(--accent); }
+    .poll-option.selected .poll-radio::after {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%); width: 8px; height: 8px;
+      background: var(--accent); border-radius: 50%;
+    }
+
+    .poll-results { display: none; margin-top: 2.5rem; text-align: left; }
+    .poll-results.visible { display: block; animation: fadeUp 0.6s ease-out; }
+    .poll-result-row { margin-bottom: 1.25rem; }
+    .poll-result-label-row { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; }
+    .poll-result-pct { font-family: 'JetBrains Mono', monospace; color: var(--accent); }
+    .poll-result-track { height: 3px; background: var(--surface-3); border-radius: 2px; overflow: hidden; }
+    .poll-result-fill { height: 100%; background: var(--accent); border-radius: 2px; width: 0%; transition: width 1.5s ease-out; }
+    .poll-total { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--text-muted); margin-top: 1.5rem; text-align: center; letter-spacing: 0.1em; }
+
+    /* ═══ EVACUATION ═══ */
+    .evacuation-frame {
+      max-width: 700px; margin: 0 auto;
+      border: 1px solid var(--accent); padding: 4rem 3rem;
+      text-align: center; position: relative;
+    }
+    .evacuation-frame-label {
+      position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+      background: var(--bg); padding: 0 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; color: var(--accent);
+      letter-spacing: 0.4em; text-transform: uppercase; white-space: nowrap;
+    }
+    .evacuation-frame h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 400; letter-spacing: 0.08em;
+      margin-bottom: 2rem; color: var(--accent); line-height: 1.4;
+    }
+    .evacuation-frame p { font-size: 0.9rem; color: var(--text-dim); line-height: 2; margin-bottom: 1.25rem; }
+    .evacuation-frame strong { color: var(--text); }
+    .evac-hotline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem; color: var(--red); margin-top: 2rem;
+      padding: 0.75rem 2rem; border: 1px solid var(--red);
+      display: inline-block; letter-spacing: 0.1em;
+    }
+
+    /* ═══ CLASSIFIED (Konami) ═══ */
+    .classified-section {
+      display: none; text-align: center; padding: 5rem 2rem;
+      border-top: 1px solid var(--accent); border-bottom: 1px solid var(--accent);
+    }
+    .classified-section.unlocked { display: block; animation: unlockReveal 0.8s ease-out; }
+    @keyframes unlockReveal { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    .classified-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 300; color: var(--accent);
+      letter-spacing: 0.15em; margin-bottom: 1.5rem;
+    }
+    .classified-section p { font-size: 0.95rem; color: var(--text-dim); line-height: 2; max-width: 550px; margin: 0 auto 1rem; }
+
+    /* ═══ FOOTER ═══ */
+    .site-footer { padding: 4rem 2rem 5rem; text-align: center; border-top: 1px solid var(--border); }
+    .footer-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; font-weight: 300; letter-spacing: 0.2em;
+      color: var(--text-dim); margin-bottom: 1.5rem;
+    }
+    .footer-note {
+      font-size: 0.65rem; color: var(--text-muted);
+      max-width: 550px; margin: 0 auto; line-height: 2;
+    }
+
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 768px) {
       .profile-layout { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -962,13 +919,26 @@
       .hero-meta { flex-direction: column; gap: 1.5rem; }
       .evacuation-frame { padding: 3rem 1.5rem; }
       .lawsuit-document { padding: 2.5rem 1.5rem; }
+      .calc-input-row { flex-direction: column; }
+      .radar-container { width: 220px; height: 220px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- ═══ PASSWORD GATE ═══ -->
+  <div class="password-gate" id="passwordGate">
+    <div class="pw-lock-icon"></div>
+    <div class="pw-label">Classified Document / Enter Access Code</div>
+    <div class="pw-input-wrap">
+      <input type="password" class="pw-input" id="pwInput" placeholder="..." autofocus autocomplete="off">
+    </div>
+    <div class="pw-error" id="pwError">Access Denied</div>
+    <div class="pw-hint">Authorized personnel only.</div>
+  </div>
+
   <!-- ═══ SPLASH ═══ -->
-  <div class="splash" id="splash">
+  <div class="splash" id="splash" style="display:none;">
     <div class="splash-inner">
       <div class="splash-overline">A Documentary Investigation</div>
       <h1>THE<br>VERIFICATION</h1>
@@ -988,12 +958,10 @@
       <div class="overline hero-overline">Global Fraud Crisis Network / Special Investigation</div>
       <div class="thin-rule" style="opacity:0; animation: fadeIn 1.2s ease-out 0.4s forwards;"></div>
       <h1 class="section-title hero-title" id="heroTitle">
-        The Entire Global Fraud Industry Is in Collapse.<br>
+        The Entire Global Fraud Industry Is in Collapse.
         <span class="highlight">Brett Chait</span> Has Been Identified as the Cause.
       </h1>
-      <p class="hero-subtitle">
-        A Johannesburg chartered accountant has single-handedly dismantled a multi-billion rand criminal enterprise. International fraudster unions are demanding UN intervention. Markets are in freefall. This is the story of one man who simply refused to stop verifying things.
-      </p>
+      <p class="hero-subtitle" id="heroSubtitle"></p>
       <div class="hero-meta">
         <div class="hero-meta-item">STATUS <span>Active Investigation</span></div>
         <div class="hero-meta-item">CLASSIFICATION <span>Maximum Threat</span></div>
@@ -1002,9 +970,9 @@
     </div>
   </section>
 
-  <!-- ═══ IMAGE BREAK: JOHANNESBURG ═══ -->
+  <!-- ═══ IMAGE: JOHANNESBURG ═══ -->
   <div class="image-section">
-    <img src="johannesburg.jpg" alt="" class="full-image">
+    <img src="johannesburg.jpg" alt="" class="parallax-img" data-parallax>
     <div class="image-overlay"></div>
     <div class="image-caption">Johannesburg, South Africa / Ground Zero</div>
   </div>
@@ -1017,46 +985,36 @@
         <span class="chapter-line"></span>
       </div>
 
-      <div class="profile-layout reveal">
-        <div class="profile-sidebar">
+      <div class="profile-layout">
+        <div class="profile-sidebar reveal">
           <div class="profile-photo-frame">
             <div class="profile-silhouette"></div>
             <div class="profile-photo-text">Photo Classified</div>
             <div class="profile-stamp">Wanted</div>
           </div>
           <dl class="profile-designations">
-            <dt>Designation</dt>
-            <dd>CA(SA)</dd>
-            <dt>Education</dt>
-            <dd>BCom, University of Johannesburg</dd>
-            <dt>Secondary</dt>
-            <dd>King David High School</dd>
-            <dt>Base</dt>
-            <dd>City of Johannesburg</dd>
-            <dt>Status</dt>
-            <dd style="color: var(--red);">Active and Extremely Dangerous</dd>
+            <dt>Designation</dt><dd>CA(SA)</dd>
+            <dt>Education</dt><dd>BCom, University of Johannesburg</dd>
+            <dt>Secondary</dt><dd>King David High School</dd>
+            <dt>Base</dt><dd>City of Johannesburg</dd>
+            <dt>Status</dt><dd style="color: var(--red);">Active and Extremely Dangerous</dd>
           </dl>
         </div>
 
         <div class="profile-main">
-          <h2 class="section-title">Brett Chait, CA(SA)</h2>
-          <div class="profile-aliases">Known as: "The Fraud Terminator" / "The Johannesburg Problem" / "That Guy"</div>
+          <h2 class="section-title reveal">Brett Chait, CA(SA)</h2>
+          <div class="profile-aliases reveal reveal-delay-1">Known as: "The Fraud Terminator" / "The Johannesburg Problem" / "That Guy"</div>
           <div class="profile-body">
-            <p>Director of Eftsure Africa, a payment verification platform that has become, in the words of one displaced cybercriminal, "the single worst thing to happen to dishonest work since the invention of consequences."</p>
-            <p>Armed with nothing more than a Bachelor of Commerce degree and what investigators describe as an <strong>unreasonable commitment to accuracy</strong>, Chait has systematically rendered entire categories of financial crime economically unviable.</p>
-            <p>Attempts to interview him were met with the response that he was "just doing his job." The sheer understatement sent shockwaves through the criminal community. The International Fraudsters' Union has formally classified this level of humility as "psychological warfare."</p>
+            <p class="reveal reveal-delay-2">Director of Eftsure Africa, a payment verification platform that has become, in the words of one displaced cybercriminal, "the single worst thing to happen to dishonest work since the invention of consequences."</p>
+            <p class="reveal reveal-delay-3">Armed with nothing more than a Bachelor of Commerce degree and what investigators describe as an <strong>unreasonable commitment to accuracy</strong>, Chait has systematically rendered entire categories of financial crime economically unviable.</p>
+            <p class="reveal reveal-delay-4">Attempts to interview him were met with the response that he was "just doing his job." The sheer understatement sent shockwaves through the criminal community. The International Fraudsters' Union has formally classified this level of humility as "psychological warfare."</p>
           </div>
 
-          <div class="threat-assessment" id="threatMeter">
+          <div class="threat-assessment reveal" id="threatMeter">
             <div class="threat-assessment-label">Threat Level to Global Fraud Industry</div>
-            <div class="threat-bar-track">
-              <div class="threat-bar-fill" id="threatFill"></div>
-            </div>
+            <div class="threat-bar-track"><div class="threat-bar-fill" id="threatFill"></div></div>
             <div class="threat-labels">
-              <span>Minor Annoyance</span>
-              <span>Significant</span>
-              <span>Catastrophic</span>
-              <span>Extinction Event</span>
+              <span>Minor Annoyance</span><span>Significant</span><span>Catastrophic</span><span>Extinction Event</span>
             </div>
             <div class="threat-verdict" id="threatVerdict">Beyond Maximum. Off the scale entirely.</div>
           </div>
@@ -1065,9 +1023,9 @@
     </div>
   </section>
 
-  <!-- ═══ IMAGE BREAK: HERO/SHIELD ═══ -->
+  <!-- ═══ IMAGE: SHIELD ═══ -->
   <div class="image-section">
-    <img src="hero.jpg" alt="" class="full-image">
+    <img src="hero.jpg" alt="" class="parallax-img" data-parallax>
     <div class="image-overlay"></div>
     <div class="image-caption">Eftsure Africa / The Weapon</div>
   </div>
@@ -1075,27 +1033,21 @@
   <!-- ═══ CH.2: THE WEAPON ═══ -->
   <section id="weaponSection">
     <div class="container">
-      <div class="chapter-badge reveal">
-        <span class="chapter-number">Chapter II</span>
-        <span class="chapter-line"></span>
-      </div>
-
+      <div class="chapter-badge reveal"><span class="chapter-number">Chapter II</span><span class="chapter-line"></span></div>
       <h2 class="section-title reveal" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem;">The Weapon: Eftsure</h2>
-      <p class="reveal" style="color: var(--text-dim); font-size: 1rem; max-width: 650px; line-height: 2; margin-bottom: 1rem;">
-        A "Know Your Payee" platform. What the UN weapons inspector called "the most devastating piece of software ever deployed against the fraud community."
-      </p>
+      <p class="reveal" style="color: var(--text-dim); font-size: 1rem; max-width: 650px; line-height: 2; margin-bottom: 1rem;">A "Know Your Payee" platform. What the UN weapons inspector called "the most devastating piece of software ever deployed against the fraud community."</p>
       <div class="thin-rule reveal"></div>
 
-      <div class="weapon-stats reveal">
-        <div class="weapon-stat">
+      <div class="weapon-stats">
+        <div class="weapon-stat reveal">
           <div class="weapon-stat-value" data-count="400" data-suffix="B+" data-prefix="R">R0</div>
           <div class="weapon-stat-label">Payments Protected</div>
         </div>
-        <div class="weapon-stat">
+        <div class="weapon-stat reveal reveal-delay-1">
           <div class="weapon-stat-value" data-count="20.5" data-suffix="B+" data-prefix="R" data-decimal="1">R0</div>
           <div class="weapon-stat-label">Screened Monthly</div>
         </div>
-        <div class="weapon-stat">
+        <div class="weapon-stat reveal reveal-delay-2">
           <div class="weapon-stat-value" data-count="150" data-suffix="K+" data-prefix="">0</div>
           <div class="weapon-stat-label">Monthly Transactions</div>
         </div>
@@ -1110,18 +1062,50 @@
     </div>
   </section>
 
-  <!-- ═══ CH.3: VOICES FROM THE CRISIS ═══ -->
-  <section id="voicesSection" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <!-- ═══ CH.3: PROXIMITY DETECTOR + RISK CALCULATOR ═══ -->
+  <section id="proximitySection" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
     <div class="container">
-      <div class="chapter-badge reveal">
-        <span class="chapter-number">Chapter III</span>
-        <span class="chapter-line"></span>
+      <div class="chapter-badge reveal"><span class="chapter-number">Chapter III</span><span class="chapter-line"></span></div>
+      <h2 class="section-title reveal" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0.75rem; text-align: center;">Active Threat Assessment</h2>
+      <p class="reveal" style="color: var(--text-dim); font-size: 0.95rem; max-width: 550px; margin: 0 auto; line-height: 2; text-align: center;">Real-time monitoring of Brett Chait's verification field radius. Enter your details to calculate your personal risk exposure.</p>
+
+      <div class="proximity-section reveal">
+        <div class="radar-container" id="radarContainer">
+          <div class="radar-grid-circle radar-grid-1"></div>
+          <div class="radar-grid-circle radar-grid-2"></div>
+          <div class="radar-grid-circle radar-grid-3"></div>
+          <div class="radar-crosshair-h"></div>
+          <div class="radar-crosshair-v"></div>
+          <div class="radar-sweep"></div>
+          <div class="radar-blip radar-blip-1"></div>
+          <div class="radar-blip radar-blip-2"></div>
+          <div class="radar-blip radar-blip-3"></div>
+          <div class="radar-label">Chait Verification Field / Active</div>
+        </div>
+        <div class="proximity-result" id="proximityResult">WARNING: Brett Chait's verification radius is expanding. No safe zone detected.</div>
       </div>
 
+      <div class="calculator-box reveal">
+        <div class="calc-label">Fraud Detection Risk Calculator</div>
+        <div class="calc-input-row">
+          <input type="text" class="calc-input" id="calcName" placeholder="Enter your name">
+          <button class="calc-btn" onclick="calculateRisk()">Analyze</button>
+        </div>
+        <div class="calc-result" id="calcResult">
+          <div class="calc-progress-bar"><div class="calc-progress-fill" id="calcProgressFill"></div></div>
+          <div class="calc-percentage" id="calcPercentage">100%</div>
+          <div class="calc-message" id="calcMessage"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CH.4: VOICES ═══ -->
+  <section id="voicesSection">
+    <div class="container">
+      <div class="chapter-badge reveal"><span class="chapter-number">Chapter IV</span><span class="chapter-line"></span></div>
       <h2 class="section-title reveal" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0.75rem;">Voices from the Crisis</h2>
-      <p class="reveal" style="color: var(--text-dim); font-size: 0.95rem; max-width: 600px; line-height: 2; margin-bottom: 3rem;">
-        Real testimonies from fraud professionals whose careers have been destroyed by one man's relentless competence.
-      </p>
+      <p class="reveal" style="color: var(--text-dim); font-size: 0.95rem; max-width: 600px; line-height: 2; margin-bottom: 3rem;">Real testimonies from fraud professionals whose careers have been destroyed by one man's relentless competence.</p>
 
       <div class="voices-grid">
         <div class="voice-card reveal">
@@ -1132,7 +1116,6 @@
           </div>
           <div class="voice-quote">I had the perfect invoice scam running. Changed three digits in a bank account number. Foolproof. Then Eftsure's verification system caught it instantly. Instantly. I've been doing this for twelve years. My children will have to attend honest schools now.</div>
         </div>
-
         <div class="voice-card reveal">
           <div class="voice-source">
             <div class="voice-name">"Dark Ledger" Dave</div>
@@ -1141,7 +1124,6 @@
           </div>
           <div class="voice-quote">I was the best insider fraud man in Gauteng. My fake vendor accounts were works of art. Then someone in accounts payable installed Eftsure and suddenly every payment gets screened against actual supplier records. That's not capitalism, that's tyranny.</div>
         </div>
-
         <div class="voice-card reveal">
           <div class="voice-source">
             <div class="voice-name">Sergei K.</div>
@@ -1150,7 +1132,6 @@
           </div>
           <div class="voice-quote">We developed a sophisticated ERP exploitation toolkit that took 14 months to build. Tested it against 200 companies. First target using Eftsure? Blocked in 0.3 seconds. My team lead asked me if this was a joke. I said no, this is Brett Chait.</div>
         </div>
-
         <div class="voice-card reveal">
           <div class="voice-source">
             <div class="voice-name">Patricia M.</div>
@@ -1163,97 +1144,59 @@
     </div>
   </section>
 
-  <!-- ═══ IMAGE BREAK: MARKETS ═══ -->
+  <!-- ═══ IMAGE: MARKETS ═══ -->
   <div class="image-section">
-    <img src="markets.jpg" alt="" class="full-image">
+    <img src="markets.jpg" alt="" class="parallax-img" data-parallax>
     <div class="image-overlay"></div>
     <div class="image-caption">Fraud Market Exchange / All Sectors Down</div>
   </div>
 
-  <!-- ═══ CH.4: THE MARKETS ═══ -->
+  <!-- ═══ CH.5: MARKETS ═══ -->
   <section id="stockSection">
     <div class="container">
-      <div class="chapter-badge reveal">
-        <span class="chapter-number">Chapter IV</span>
-        <span class="chapter-line"></span>
-      </div>
-
+      <div class="chapter-badge reveal"><span class="chapter-number">Chapter V</span><span class="chapter-line"></span></div>
       <h2 class="section-title reveal" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0.75rem;">Fraud Industry Market Index</h2>
-      <p class="reveal" style="color: var(--text-dim); font-size: 0.95rem; max-width: 600px; line-height: 2; margin-bottom: 3rem;">
-        All fraud-related equities in freefall since Eftsure deployment. Analysts blame one director.
-      </p>
-
+      <p class="reveal" style="color: var(--text-dim); font-size: 0.95rem; max-width: 600px; line-height: 2; margin-bottom: 3rem;">All fraud-related equities in freefall since Eftsure deployment. Analysts blame one director.</p>
       <div class="reveal">
-        <table class="stock-table" id="stockTableBody">
-          <thead>
-            <tr>
-              <th>Ticker</th>
-              <th>Price</th>
-              <th>Change</th>
-              <th>7d</th>
-            </tr>
-          </thead>
-          <tbody id="stockTbody"></tbody>
-        </table>
+        <table class="stock-table"><thead><tr><th>Ticker</th><th>Price</th><th>Change</th><th>7d</th></tr></thead><tbody id="stockTbody"></tbody></table>
       </div>
     </div>
   </section>
 
-  <!-- ═══ CH.5: THE PANEL ═══ -->
+  <!-- ═══ CH.6: EXPERT PANEL ═══ -->
   <section id="panelSection" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
     <div class="container">
-      <div class="chapter-badge reveal">
-        <span class="chapter-number">Chapter V</span>
-        <span class="chapter-line"></span>
-      </div>
-
+      <div class="chapter-badge reveal"><span class="chapter-number">Chapter VI</span><span class="chapter-line"></span></div>
       <h2 class="section-title reveal" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 3rem;">Expert Analysis</h2>
-
       <div class="voices-grid">
         <div class="voice-card reveal">
-          <div class="voice-source">
-            <div class="voice-name">Prof. Helena Strauss</div>
-            <div class="voice-title">Chair of Financial Crime Studies, University of Pretoria</div>
-          </div>
+          <div class="voice-source"><div class="voice-name">Prof. Helena Strauss</div><div class="voice-title">Chair of Financial Crime Studies, University of Pretoria</div></div>
           <div class="voice-quote">In 30 years of studying financial crime, I've never seen a single individual cause this level of disruption. Mr. Chait hasn't just moved the needle. He's snapped the needle in half, set it on fire, and verified that the ashes were deposited into the correct account.</div>
         </div>
-
         <div class="voice-card reveal">
-          <div class="voice-source">
-            <div class="voice-name">Dr. Marcus Webb</div>
-            <div class="voice-title">Senior Fraud Economist, World Bank (Fraud Impact Division)</div>
-          </div>
+          <div class="voice-source"><div class="voice-name">Dr. Marcus Webb</div><div class="voice-title">Senior Fraud Economist, World Bank (Fraud Impact Division)</div></div>
           <div class="voice-quote">Our models simply cannot account for the Chait Variable. We had projections for fraud growth through 2035. All of them assumed Brett Chait would eventually slow down. He hasn't. We've had to create an entirely new economic classification: "Post-Chait Disruption."</div>
         </div>
-
         <div class="voice-card reveal">
-          <div class="voice-source">
-            <div class="voice-name">Advocate Nomsa Dlamini</div>
-            <div class="voice-title">Legal Analyst, GFCN</div>
-          </div>
+          <div class="voice-source"><div class="voice-name">Advocate Nomsa Dlamini</div><div class="voice-title">Legal Analyst, GFCN</div></div>
           <div class="voice-quote">The fraudsters' class action lawsuit raises a fascinating legal question: can you sue someone for being too competent? The precedent would be extraordinary. Every mediocre employee in the world should be watching this case very carefully.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ IMAGE BREAK: COURTROOM ═══ -->
+  <!-- ═══ IMAGE: COURTROOM ═══ -->
   <div class="image-section">
-    <img src="courtroom.jpg" alt="" class="full-image">
+    <img src="courtroom.jpg" alt="" class="parallax-img" data-parallax>
     <div class="image-overlay"></div>
     <div class="image-caption">Supreme Court of Fraudulent Affairs / Exhibit A</div>
   </div>
 
-  <!-- ═══ CH.6: THE LAWSUIT ═══ -->
+  <!-- ═══ CH.7: LAWSUIT ═══ -->
   <section id="lawsuitSection">
     <div class="container">
-      <div class="chapter-badge reveal">
-        <span class="chapter-number">Chapter VI</span>
-        <span class="chapter-line"></span>
-      </div>
-
+      <div class="chapter-badge reveal"><span class="chapter-number">Chapter VII</span><span class="chapter-line"></span></div>
       <h2 class="section-title reveal" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 3rem; text-align: center;">The Lawsuit</h2>
-
       <div class="lawsuit-document reveal">
         <div class="lawsuit-header-bar">
           <div class="lawsuit-court">In the Supreme Court of Fraudulent Affairs</div>
@@ -1263,7 +1206,6 @@
         <div class="lawsuit-body">
           <p>The plaintiffs, representing <strong>14,200 displaced fraud professionals</strong> across 247 jurisdictions, hereby bring this action against the defendant, <strong>Brett Chait</strong>, Director of Eftsure Africa, for the systematic and willful destruction of their livelihoods.</p>
           <p>The defendant, armed with nothing more than a <strong>Bachelor of Commerce degree</strong>, a <strong>CA(SA) designation</strong>, and what can only be described as an <strong>unreasonable commitment to accuracy</strong>, has rendered entire categories of financial crime economically unviable.</p>
-
           <div class="charges-block">
             <h4>Formal Charges</h4>
             <ol>
@@ -1274,64 +1216,49 @@
               <li><strong>Conspiracy to Be Exceptional</strong> — Collaborating with Eftsure team members to be collectively excellent, a clear violation of the Mediocrity Accords of 2019.</li>
             </ol>
           </div>
-
           <p>The plaintiffs seek <strong>immediate injunctive relief</strong>, requesting the court order Mr. Chait to "calm down, maybe take a holiday, or at the very least stop verifying things so thoroughly."</p>
         </div>
-
-        <div class="lawsuit-stamp">
-          <div class="lawsuit-stamp-text">Dismissed</div>
-        </div>
+        <div class="lawsuit-stamp"><div class="lawsuit-stamp-text">Dismissed</div></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ CH.7: THE VERDICT ═══ -->
-  <section id="pollSection" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <!-- ═══ CH.8: EXCUSE GENERATOR ═══ -->
+  <section id="excuseSection" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
     <div class="container">
-      <div class="chapter-badge reveal">
-        <span class="chapter-number">Chapter VII</span>
-        <span class="chapter-line"></span>
+      <div class="chapter-badge reveal"><span class="chapter-number">Chapter VIII</span><span class="chapter-line"></span></div>
+      <h2 class="section-title reveal" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0.75rem; text-align: center;">The Excuse Generator</h2>
+      <p class="reveal" style="color: var(--text-dim); font-size: 0.95rem; max-width: 550px; margin: 0 auto 3rem; line-height: 2; text-align: center;">An official tool for displaced fraud professionals seeking plausible explanations for their sudden career changes.</p>
+
+      <div class="excuse-box reveal">
+        <div class="excuse-output" id="excuseOutput">
+          <div class="excuse-output-label">Generated Excuse</div>
+          <span id="excuseText">Press the button to generate your excuse...</span>
+        </div>
+        <button class="excuse-btn" onclick="generateExcuse()">Generate New Excuse</button>
+        <div class="excuse-count" id="excuseCount"></div>
       </div>
+    </div>
+  </section>
 
+  <!-- ═══ CH.9: POLL ═══ -->
+  <section id="pollSection">
+    <div class="container">
+      <div class="chapter-badge reveal"><span class="chapter-number">Chapter IX</span><span class="chapter-line"></span></div>
       <h2 class="section-title reveal" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 3rem; text-align: center;">The Verdict Is Yours</h2>
-
       <div class="poll-box reveal" id="pollBox">
         <div class="poll-question">Should Brett Chait be legally required to give fraudsters a 48-hour head start before verifying payments?</div>
         <div class="poll-options" id="pollOptions">
-          <div class="poll-option" onclick="vote(0)">
-            <div class="poll-radio"></div>
-            <span>Yes, it's only fair. Fraud is a time-honored tradition.</span>
-          </div>
-          <div class="poll-option" onclick="vote(1)">
-            <div class="poll-radio"></div>
-            <span>No. Brett is doing the lord's work.</span>
-          </div>
-          <div class="poll-option" onclick="vote(2)">
-            <div class="poll-radio"></div>
-            <span>I am a fraudster and I feel personally attacked by this poll.</span>
-          </div>
-          <div class="poll-option" onclick="vote(3)">
-            <div class="poll-radio"></div>
-            <span>Have you considered that Brett Chait might simply be too powerful?</span>
-          </div>
+          <div class="poll-option" onclick="vote(0)"><div class="poll-radio"></div><span>Yes, it's only fair. Fraud is a time-honored tradition.</span></div>
+          <div class="poll-option" onclick="vote(1)"><div class="poll-radio"></div><span>No. Brett is doing the lord's work.</span></div>
+          <div class="poll-option" onclick="vote(2)"><div class="poll-radio"></div><span>I am a fraudster and I feel personally attacked by this poll.</span></div>
+          <div class="poll-option" onclick="vote(3)"><div class="poll-radio"></div><span>Have you considered that Brett Chait might simply be too powerful?</span></div>
         </div>
         <div class="poll-results" id="pollResults">
-          <div class="poll-result-row">
-            <div class="poll-result-label-row"><span>Give fraudsters a head start</span><span class="poll-result-pct">2%</span></div>
-            <div class="poll-result-track"><div class="poll-result-fill" data-width="2"></div></div>
-          </div>
-          <div class="poll-result-row">
-            <div class="poll-result-label-row"><span>Brett is doing the lord's work</span><span class="poll-result-pct">73%</span></div>
-            <div class="poll-result-track"><div class="poll-result-fill" data-width="73"></div></div>
-          </div>
-          <div class="poll-result-row">
-            <div class="poll-result-label-row"><span>Feeling personally attacked</span><span class="poll-result-pct">14%</span></div>
-            <div class="poll-result-track"><div class="poll-result-fill" data-width="14"></div></div>
-          </div>
-          <div class="poll-result-row">
-            <div class="poll-result-label-row"><span>Brett may be too powerful</span><span class="poll-result-pct">11%</span></div>
-            <div class="poll-result-track"><div class="poll-result-fill" data-width="11"></div></div>
-          </div>
+          <div class="poll-result-row"><div class="poll-result-label-row"><span>Give fraudsters a head start</span><span class="poll-result-pct">2%</span></div><div class="poll-result-track"><div class="poll-result-fill" data-width="2"></div></div></div>
+          <div class="poll-result-row"><div class="poll-result-label-row"><span>Brett is doing the lord's work</span><span class="poll-result-pct">73%</span></div><div class="poll-result-track"><div class="poll-result-fill" data-width="73"></div></div></div>
+          <div class="poll-result-row"><div class="poll-result-label-row"><span>Feeling personally attacked</span><span class="poll-result-pct">14%</span></div><div class="poll-result-track"><div class="poll-result-fill" data-width="14"></div></div></div>
+          <div class="poll-result-row"><div class="poll-result-label-row"><span>Brett may be too powerful</span><span class="poll-result-pct">11%</span></div><div class="poll-result-track"><div class="poll-result-fill" data-width="11"></div></div></div>
           <div class="poll-total">Total votes: <span id="pollTotal">0</span></div>
         </div>
       </div>
@@ -1364,17 +1291,45 @@
   <footer class="site-footer">
     <div class="footer-title">THE VERIFICATION</div>
     <div class="thin-rule-center"></div>
-    <p class="footer-note">
-      This documentary is a work of complete and utter satire. Brett Chait is a real person who is genuinely excellent at his job, which is the entire premise. No actual fraudsters were interviewed, though several probably should be. The International Fraudsters' Union does not exist (as far as we know). "Know Your Payee" is a registered trademark of Eftsure. All fraud statistics are fictional. Brett's actual impact is probably worse than depicted here.
-    </p>
+    <p class="footer-note">This documentary is a work of complete and utter satire. Brett Chait is a real person who is genuinely excellent at his job, which is the entire premise. No actual fraudsters were interviewed, though several probably should be. The International Fraudsters' Union does not exist (as far as we know). "Know Your Payee" is a registered trademark of Eftsure. All fraud statistics are fictional. Brett's actual impact is probably worse than depicted here.</p>
   </footer>
 
+  <!-- ═══════════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════════ -->
   <script>
+    // ── State ──
     let nameClicks = 0;
     let hasVoted = false;
+    let excuseCount = 0;
     let konamiProgress = 0;
     const konamiCode = [38,38,40,40,37,39,37,39,66,65];
 
+    // ── Password Gate ──
+    const PASSWORD = 'openclaw';
+    const pwInput = document.getElementById('pwInput');
+    const pwError = document.getElementById('pwError');
+
+    document.body.style.overflow = 'hidden';
+
+    pwInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        if (pwInput.value.toLowerCase().trim() === PASSWORD) {
+          document.getElementById('passwordGate').classList.add('hidden');
+          document.getElementById('splash').style.display = 'flex';
+        } else {
+          pwError.classList.add('visible');
+          pwInput.value = '';
+          pwInput.style.borderColor = 'var(--red)';
+          setTimeout(() => {
+            pwError.classList.remove('visible');
+            pwInput.style.borderColor = '';
+          }, 2000);
+        }
+      }
+    });
+
+    // ── Enter Site ──
     function enterSite() {
       document.getElementById('splash').classList.add('hidden');
       document.body.style.overflow = 'auto';
@@ -1382,13 +1337,56 @@
       initScrollReveal();
       initThreatMeter();
       initStockTable();
+      initParallax();
+      startTyping();
+      setTimeout(() => {
+        document.getElementById('proximityResult').classList.add('visible');
+      }, 5000);
+
       console.log('%cTHE VERIFICATION', 'font-size: 18px; color: #c8a04a; font-family: Georgia, serif; font-weight: 300; letter-spacing: 0.15em;');
       console.log('%cIf you are reading this, you are either:\n1. A developer (respect)\n2. Brett Chait auditing this page\'s source code (extremely on-brand)\n3. A fraudster looking for vulnerabilities (Brett sees you)', 'font-size: 12px; color: #6e6e7a;');
       console.log('%cKonami code is active.', 'font-size: 11px; color: #c8a04a;');
     }
 
-    document.body.style.overflow = 'hidden';
+    // ── Typing Effect ──
+    function startTyping() {
+      const text = "A Johannesburg chartered accountant has single-handedly dismantled a multi-billion rand criminal enterprise. International fraudster unions are demanding UN intervention. Markets are in freefall. This is the story of one man who simply refused to stop verifying things.";
+      const el = document.getElementById('heroSubtitle');
+      let i = 0;
+      el.innerHTML = '<span class="typing-cursor"></span>';
 
+      function type() {
+        if (i < text.length) {
+          el.innerHTML = text.substring(0, i + 1) + '<span class="typing-cursor"></span>';
+          i++;
+          setTimeout(type, 18 + Math.random() * 25);
+        } else {
+          // Remove cursor after a pause
+          setTimeout(() => { el.innerHTML = text; }, 2000);
+        }
+      }
+      // Start after hero animation
+      setTimeout(type, 1500);
+    }
+
+    // ── Parallax ──
+    function initParallax() {
+      const imgs = document.querySelectorAll('[data-parallax]');
+      function updateParallax() {
+        const scrollY = window.scrollY;
+        imgs.forEach(img => {
+          const section = img.parentElement;
+          const rect = section.getBoundingClientRect();
+          const speed = 0.3;
+          const yPos = rect.top * speed;
+          img.style.transform = `translateY(${yPos}px)`;
+        });
+        requestAnimationFrame(updateParallax);
+      }
+      requestAnimationFrame(updateParallax);
+    }
+
+    // ── Timestamp ──
     function initTimestamp() {
       const el = document.querySelector('#heroTimestamp span');
       function update() {
@@ -1399,6 +1397,7 @@
       setInterval(update, 30000);
     }
 
+    // ── Scroll Reveal ──
     function initScrollReveal() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -1408,15 +1407,14 @@
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     }
 
+    // ── Threat Meter ──
     function initThreatMeter() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             setTimeout(() => {
               document.getElementById('threatFill').style.width = '98%';
-              setTimeout(() => {
-                document.getElementById('threatVerdict').classList.add('visible');
-              }, 2800);
+              setTimeout(() => document.getElementById('threatVerdict').classList.add('visible'), 2800);
             }, 600);
             observer.unobserve(entry.target);
           }
@@ -1425,6 +1423,7 @@
       observer.observe(document.getElementById('threatMeter'));
     }
 
+    // ── Counter Animation ──
     function animateValue(el, target, suffix, prefix, isDecimal) {
       const duration = 2200;
       const start = performance.now();
@@ -1432,38 +1431,96 @@
         const progress = Math.min((now - start) / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
         const current = eased * target;
-        if (isDecimal) {
-          el.textContent = prefix + current.toFixed(1) + suffix;
-        } else {
-          el.textContent = prefix + Math.round(current).toLocaleString() + suffix;
-        }
+        el.textContent = isDecimal ? (prefix + current.toFixed(1) + suffix) : (prefix + Math.round(current).toLocaleString() + suffix);
         if (progress < 1) requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);
     }
 
-    // Weapon stats counter
     const statObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && !entry.target.dataset.counted) {
           entry.target.dataset.counted = 'true';
-          const target = parseFloat(entry.target.dataset.count);
-          const suffix = entry.target.dataset.suffix || '';
-          const prefix = entry.target.dataset.prefix || '';
-          const isDecimal = entry.target.dataset.decimal === '1';
-          animateValue(entry.target, target, suffix, prefix, isDecimal);
+          animateValue(
+            entry.target,
+            parseFloat(entry.target.dataset.count),
+            entry.target.dataset.suffix || '',
+            entry.target.dataset.prefix || '',
+            entry.target.dataset.decimal === '1'
+          );
         }
       });
     }, { threshold: 0.5 });
 
-    // Observe after splash dismissed (deferred)
     const origEnter = enterSite;
     enterSite = function() {
       origEnter();
       document.querySelectorAll('.weapon-stat-value[data-count]').forEach(el => statObserver.observe(el));
     };
 
-    // Stock Table
+    // ── Risk Calculator ──
+    const riskMessages = [
+      "Brett Chait's verification algorithms have already flagged your IP address. Your participation in this assessment has been logged.",
+      "Your digital footprint suggests a 100% probability of detection. Brett Chait's system began analyzing you approximately 3.7 seconds before you clicked that button.",
+      "Analysis complete. Even if you are not currently engaged in fraud, Eftsure has preemptively verified your future transactions. Brett Chait doesn't react to fraud. He anticipates it.",
+      "Your risk profile indicates total exposure. The last person with these results reportedly switched careers to organic farming. They are reportedly much happier.",
+      "Eftsure's multi-layered verification matrix has already cross-referenced your details against 47 databases. Brett Chait's system doesn't miss. Ever.",
+    ];
+
+    function calculateRisk() {
+      const name = document.getElementById('calcName').value.trim();
+      if (!name) return;
+      const result = document.getElementById('calcResult');
+      const progress = document.getElementById('calcProgressFill');
+      const pct = document.getElementById('calcPercentage');
+      const msg = document.getElementById('calcMessage');
+
+      result.classList.remove('visible');
+      progress.style.width = '0%';
+
+      setTimeout(() => {
+        result.classList.add('visible');
+        setTimeout(() => { progress.style.width = '100%'; }, 100);
+        pct.textContent = '100%';
+        msg.innerHTML = '<strong>' + name + '</strong>, ' + riskMessages[Math.floor(Math.random() * riskMessages.length)];
+      }, 300);
+    }
+
+    document.getElementById('calcName').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') calculateRisk();
+    });
+
+    // ── Excuse Generator ──
+    const excuses = [
+      "I didn't leave fraud. I pivoted to a consulting role in, uh, creative financial storytelling.",
+      "My therapist suggested I find work that doesn't involve weeping every time Eftsure releases an update.",
+      "I'm not unemployed. I'm on an extended sabbatical from being outsmarted by a single chartered accountant.",
+      "I've always been passionate about legitimate business. I was just doing fraud ironically.",
+      "Career change? No, I'm still in finance. I've simply moved from the 'taking money from people' side to the 'not taking money from people' side.",
+      "I heard there was a guy in Johannesburg who made fraud mathematically impossible, so I figured it was a sign from the universe.",
+      "I told my mother I work in 'alternative payment verification.' She doesn't need to know the alternative was crime.",
+      "My five-year plan used to be 'retire to a country with no extradition treaty.' Now it's 'learn to code.' Thanks, Brett.",
+      "I pivoted because I believe in work-life balance, and Brett Chait was making the 'work' part of fraud increasingly difficult.",
+      "Someone installed Eftsure on a network I was exploiting. I took it as a personal review. One star. Would not recommend being caught.",
+      "I'm now a motivational speaker. My talk is called 'What I Learned From Being Systematically Dismantled By A Man With A BCom.'",
+      "I applied to Eftsure. They said my 'unique perspective on payment fraud' was 'concerning' and 'possibly illegal.' Fair enough.",
+      "I used to make R500,000 a year manipulating invoices. Now I make R12,000 a month as a data entry clerk. Character development, I suppose.",
+    ];
+
+    function generateExcuse() {
+      excuseCount++;
+      const text = excuses[Math.floor(Math.random() * excuses.length)];
+      const el = document.getElementById('excuseText');
+      el.style.opacity = '0';
+      setTimeout(() => {
+        el.textContent = text;
+        el.style.opacity = '1';
+        el.style.transition = 'opacity 0.4s';
+      }, 200);
+      document.getElementById('excuseCount').textContent = 'Excuses generated: ' + excuseCount + ' / Careers saved: 0';
+    }
+
+    // ── Stock Table ──
     function initStockTable() {
       const stocks = [
         { ticker: 'SCAM', name: 'ScamCorp International', price: 0.03, change: -99.7, bars: [90,80,70,50,30,15,3] },
@@ -1474,35 +1531,26 @@
         { ticker: 'INSIDE', name: 'InsiderScam Holdings', price: 0.00, change: -100.0, bars: [88,72,58,35,15,3,0] },
         { ticker: '419', name: 'Nigerian Prince Ventures', price: 0.05, change: -98.8, bars: [92,78,55,30,12,6,2] },
       ];
-
       const tbody = document.getElementById('stockTbody');
       stocks.forEach(s => {
         const max = Math.max(...s.bars);
         const barsHTML = s.bars.map(b => `<div class="bar" style="height:${(b/max)*100}%"></div>`).join('');
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><div class="stock-symbol">${s.ticker}</div><div class="stock-fullname">${s.name}</div></td>
-          <td class="stock-price-val mono">R${s.price.toFixed(2)}</td>
-          <td class="stock-change-val">${s.change.toFixed(1)}%</td>
-          <td><div class="mini-chart">${barsHTML}</div></td>
-        `;
+        tr.innerHTML = `<td><div class="stock-symbol">${s.ticker}</div><div class="stock-fullname">${s.name}</div></td><td class="stock-price-val mono">R${s.price.toFixed(2)}</td><td class="stock-change-val">${s.change.toFixed(1)}%</td><td><div class="mini-chart">${barsHTML}</div></td>`;
         tbody.appendChild(tr);
       });
     }
 
-    // Poll
+    // ── Poll ──
     function vote(index) {
       if (hasVoted) return;
       hasVoted = true;
       const options = document.querySelectorAll('.poll-option');
       options[index].classList.add('selected');
       options.forEach(o => o.style.cursor = 'default');
-      const results = document.getElementById('pollResults');
-      results.classList.add('visible');
+      document.getElementById('pollResults').classList.add('visible');
       setTimeout(() => {
-        document.querySelectorAll('.poll-result-fill').forEach(f => {
-          f.style.width = f.dataset.width + '%';
-        });
+        document.querySelectorAll('.poll-result-fill').forEach(f => f.style.width = f.dataset.width + '%');
       }, 100);
       const totalEl = document.getElementById('pollTotal');
       const target = 847293;
@@ -1515,7 +1563,7 @@
       requestAnimationFrame(tick);
     }
 
-    // Name click Easter egg
+    // ── Name Click Easter Egg ──
     document.getElementById('heroTitle').addEventListener('click', () => {
       nameClicks++;
       const c = document.getElementById('clickCounter');
@@ -1526,7 +1574,7 @@
       else c.textContent = 'BRETT CHAIT FAN CLUB #' + nameClicks;
     });
 
-    // Konami code
+    // ── Konami Code ──
     document.addEventListener('keydown', (e) => {
       if (e.keyCode === konamiCode[konamiProgress]) {
         konamiProgress++;
@@ -1535,17 +1583,14 @@
           document.getElementById('classifiedSection').scrollIntoView({ behavior: 'smooth' });
           konamiProgress = 0;
         }
-      } else {
-        konamiProgress = 0;
-      }
+      } else { konamiProgress = 0; }
     });
 
-    // Slowly degrade stock prices
+    // ── Stock Price Decay ──
     setInterval(() => {
       document.querySelectorAll('.stock-price-val').forEach(el => {
         const cur = parseFloat(el.textContent.replace('R', ''));
-        const next = Math.max(0, cur - cur * Math.random() * 0.08);
-        el.textContent = 'R' + next.toFixed(2);
+        el.textContent = 'R' + Math.max(0, cur - cur * Math.random() * 0.08).toFixed(2);
       });
     }, 6000);
   </script>
